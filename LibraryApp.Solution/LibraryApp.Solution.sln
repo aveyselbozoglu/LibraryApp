@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApp.WebApp", "Librar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApp.Entities", "LibraryApp.Entities\LibraryApp.Entities.csproj", "{95325244-A03A-4AA2-9299-6CC8938FEF94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApp.DataAccessLayer", "LibraryApp.DataAccessLayer\LibraryApp.DataAccessLayer.csproj", "{EAECEADB-4946-4490-82BB-E1B2E0FCA413}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{95325244-A03A-4AA2-9299-6CC8938FEF94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95325244-A03A-4AA2-9299-6CC8938FEF94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95325244-A03A-4AA2-9299-6CC8938FEF94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAECEADB-4946-4490-82BB-E1B2E0FCA413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAECEADB-4946-4490-82BB-E1B2E0FCA413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAECEADB-4946-4490-82BB-E1B2E0FCA413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAECEADB-4946-4490-82BB-E1B2E0FCA413}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

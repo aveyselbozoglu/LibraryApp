@@ -1,1 +1,9 @@
-﻿
+﻿@using LibraryApp.Entities
+@model List<User>
+    
+
+
+@foreach (var u in @Model)
+{
+    <p>@u.Name @u.Surname</p>
+}

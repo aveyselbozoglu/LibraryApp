@@ -178,6 +178,16 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibraryApp.DataAccessLayer\LibraryApp.DataAccessLayer.csproj">
+      <Project>{eaeceadb-4946-4490-82bb-e1b2e0fca413}</Project>
+      <Name>LibraryApp.DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibraryApp.Entities\LibraryApp.Entities.csproj">
+      <Project>{95325244-a03a-4aa2-9299-6cc8938fef94}</Project>
+      <Name>LibraryApp.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

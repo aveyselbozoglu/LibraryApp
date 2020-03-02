@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -12,6 +13,7 @@ namespace LibraryApp.Entities
         public int Id { get; set; }
         
         // ödünç alınma tarihi
+        [Required]
         public DateTime BorrowedTime { get; set; }
         // ödünç verilme tarihi
         public DateTime LentTime { get; set; }
