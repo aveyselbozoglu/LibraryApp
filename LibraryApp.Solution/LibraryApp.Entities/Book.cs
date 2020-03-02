@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace LibraryApp.Entities
 {
-    public class Book
+    public class Book : EntityBase
     {
-        public int Id { get; set; }
+        
         public string Name { get; set; }
         public string Summary { get; set; }
         public string WriterName { get; set; }

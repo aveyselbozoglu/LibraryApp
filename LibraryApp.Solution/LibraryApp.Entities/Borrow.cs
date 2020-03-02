@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryApp.Entities
 {
-    public class Borrow
+    public class Borrow 
     {
         public int Id { get; set; }
         

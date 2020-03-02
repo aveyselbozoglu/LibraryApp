@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace LibraryApp.Entities
 {
-    public class User
+    public class User : EntityBase
     {
-        public int Id { get; set; }
+        
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -21,6 +21,7 @@ namespace LibraryApp.Entities
 
 
         public List<Borrow> Borrows { get; set; }
+        public Address Address { get; set; }
 
     }
 }
