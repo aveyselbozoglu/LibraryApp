@@ -179,9 +179,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibraryApp.DataAccessLayer\LibraryApp.DataAccessLayer.csproj">
-      <Project>{eaeceadb-4946-4490-82bb-e1b2e0fca413}</Project>
-      <Name>LibraryApp.DataAccessLayer</Name>
+    <ProjectReference Include="..\LibraryApp.BusinessLayer\LibraryApp.BusinessLayer.csproj">
+      <Project>{63D0BF59-B0A7-4136-84D4-38FD621FBCE2}</Project>
+      <Name>LibraryApp.BusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\LibraryApp.Entities\LibraryApp.Entities.csproj">
       <Project>{95325244-a03a-4aa2-9299-6cc8938fef94}</Project>

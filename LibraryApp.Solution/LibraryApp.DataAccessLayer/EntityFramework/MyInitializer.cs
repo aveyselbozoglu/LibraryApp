@@ -37,6 +37,15 @@ namespace LibraryApp.DataAccessLayer.EntityFramework
             context.Users.Add(user);
             context.Users.Add(user2);
             context.SaveChanges();
+
+
+            var address = new Address()
+            {
+                BuildingNo = "x", City = "x", District = "x", Street = "x", Owner = user2
+            };
+
+            context.Addresses.Add(address);
+            context.SaveChanges();
         }
     }
 }

@@ -27,8 +27,14 @@ namespace LibraryApp.Entities
 
 
 
-        public List<Borrow> Borrows { get; set; }
-        public virtual Address Address { get; set; }
+        public virtual List<Borrow> Borrows { get; set; }
+       
+        //public Address Address { get; set; }
+
+        public User()
+        {
+            Borrows = new List<Borrow>();
+        }
 
     }
 }

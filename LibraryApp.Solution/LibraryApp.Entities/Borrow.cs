@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -10,8 +11,9 @@ namespace LibraryApp.Entities
 {
     public class Borrow 
     {
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+
         // ödünç alınma tarihi
         [Required]
         public DateTime BorrowedTime { get; set; }
