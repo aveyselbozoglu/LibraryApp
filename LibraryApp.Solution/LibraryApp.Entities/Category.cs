@@ -12,7 +12,7 @@ namespace LibraryApp.Entities
         [Required,StringLength(50)]
         public string Name { get; set; }
 
-        public List<Book> Books{ get; set; }
+        public virtual List<Book> Books{ get; set; }
 
         public Category()
         {

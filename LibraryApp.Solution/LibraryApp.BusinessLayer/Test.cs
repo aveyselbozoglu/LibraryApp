@@ -4,9 +4,9 @@ using LibraryApp.Entities;
 
 namespace LibraryApp.BusinessLayer
 {
-    public class UserManager
+    public class Test
     {
-        public UserManager()
+        public Test()
         {
 
             Repository<User> repo_user = new Repository<User>();

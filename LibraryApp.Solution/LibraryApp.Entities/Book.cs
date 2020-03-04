@@ -17,8 +17,10 @@ namespace LibraryApp.Entities
         public string Author { get; set; }
         [Required]
         public DateTime PublishedDate { get; set; }
+
         [Required]
         public int PageCount { get; set; }
+
         [Required,StringLength(150)]
         public string Isbn { get; set; }
         [Required,StringLength(20)]
@@ -26,7 +28,7 @@ namespace LibraryApp.Entities
 
         public virtual Category Category { get; set; }
 
-        public List<Borrow> Borrows { get; set; }
+        public virtual List<Borrow> Borrows { get; set; }
 
         
 

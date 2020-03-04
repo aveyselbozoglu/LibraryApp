@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserManager.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="BookManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibraryApp.DataAccessLayer\LibraryApp.DataAccessLayer.csproj">
