@@ -34,6 +34,9 @@
                                 <td>@el.Id</td>
                                 <td>@el.Name</td>
                                 <td>@el.Author</td>
+                                
+                                <!--  özetin lengthi 40dan büyükse ve sonu " "  ile bitmiyorsa
+                                     40-60 arası ilk " "'in indexini al ve, o boşluğa kadar yaz   ,    -->
                                 @if (el.Summary.Length > 40 && el.Summary.Substring(0, 40).EndsWith(" "))
                                 {
                                     <td>@el.Summary.Substring(0, 40)..</td>

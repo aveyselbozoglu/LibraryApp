@@ -56,6 +56,7 @@
     <Compile Include="Borrow.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="EntityBase.cs" />
+    <Compile Include="ModelViews\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
@@ -63,6 +64,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

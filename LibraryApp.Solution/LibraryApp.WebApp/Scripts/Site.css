@@ -1,0 +1,19 @@
+﻿.validation-summary-errors {
+    background-color: lightblue;
+    padding: 5px;
+    margin: 10px;
+    font-family: Georgia;
+    border-radius: 5%;
+}
+
+    .validation-summary-errors ul li {
+        list-style-type: none;
+    }
+
+.validation-summary-errors{
+    background-color:#D9FFB2;
+    border: 1px solid #5CBA30;
+    color:#000000;
+    margin-top:15px;
+    margin-bottom:15px;
+}

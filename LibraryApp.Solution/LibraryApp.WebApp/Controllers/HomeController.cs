@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
+using LibraryApp.Entities.ModelViews;
 
 namespace LibraryApp.WebApp.Controllers
 {
@@ -53,5 +54,26 @@ namespace LibraryApp.WebApp.Controllers
 
             
         }
+
+        public ActionResult RegisterUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RegisterUser(RegisterViewModel registerViewModel)
+        {
+            
+              //  UserManager userManager = new UserManager();
+                if (ModelState.IsValid)
+                {
+                  //  userManager.RegisterUser()
+                }
+
+                return View(registerViewModel);
+        }
+
+
+
     }
 }
