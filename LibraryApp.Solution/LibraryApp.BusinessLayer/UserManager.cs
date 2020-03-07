@@ -1,6 +1,5 @@
 ﻿using LibraryApp.DataAccessLayer.EntityFramework;
 using LibraryApp.Entities;
-using LibraryApp.Entities.Messages;
 using LibraryApp.Entities.ModelViews;
 
 namespace LibraryApp.BusinessLayer
@@ -18,29 +17,11 @@ namespace LibraryApp.BusinessLayer
             {
                 if (resultUser.Email == registerViewModel.Email)
                 {
-                    //businessLayerResult.ErrorMessageObj.Add(new ErrorMessageObj()
-                    //{
-                    //    Code = ErrorMessageCode.EmailAlreadyUsed,
-                    //    Message = "Bu email kullanılıyor"
-                    //});
-
-                    businessLayerResult.AddError(ErrorMessageCode.EmailAlreadyUsed, "Bu email kullanılıyor");
-
-
-
-                   
+                    businessLayerResult.Errors.Add("Bu email kullanılıyor");
                 }
                 if (resultUser.Username == registerViewModel.Username)
                 {
-                    businessLayerResult.ErrorMessageObj.Add(new ErrorMessageObj()
-                    {
-                        Code = ErrorMessageCode.UsernameAlreadyUsed,
-                        Message = "Bu kullanıcı adı kullanılıyor"
-                    });
-
-                    businessLayerResult.AddError(ErrorMessageCode.UsernameAlreadyUsed, "Bu kullanıcı adı kullanılıyor");
-
-                    //businessLayerResult.Errors.Add("Bu kullanıcı adı kullanılıyor");
+                    businessLayerResult.Errors.Add("Bu kullanıcı adı kullanılıyor");
                 }
             }
             else
@@ -68,27 +49,18 @@ namespace LibraryApp.BusinessLayer
         public BusinessLayerResult<User> LoginUser(LoginViewModel loginViewModel)
         {
             Repository<User> repositoryUser = new Repository<User>();
-            BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
+            BusinessLayerResult<User> blResult = new BusinessLayerResult<User>();
 
             var resultUser = repositoryUser.Find(x => x.Email == loginViewModel.Email && x.Password == loginViewModel.Password);
 
-            if (resultUser == null)
+            if (resultUser != null)
             {
-              //  blResult.Errors.Add("Bu E-posta adresi kullanılmaktadır.");
-
-                //businessLayerResult.ErrorMessageObj.Add(new ErrorMessageObj()
-                //{
-
-                //    Code = ErrorMessageCode.EmailOrPassWrong,
-                //    Message = "Böyle bir kayıt bulunmamaktadır."
-                //});
-
-                businessLayerResult.AddError(ErrorMessageCode.EmailOrPassWrong,"Böyle bir kayıt bulunmamaktadır");
+                blResult.Errors.Add("Bu E-posta adresi kullanılmaktadır.");
             }
 
-            businessLayerResult.BlResult = resultUser;
+            blResult.BlResult = resultUser;
 
-            return businessLayerResult;
+            return blResult;
         }
     }
 }
