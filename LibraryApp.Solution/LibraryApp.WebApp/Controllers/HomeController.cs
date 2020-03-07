@@ -60,9 +60,11 @@ namespace LibraryApp.WebApp.Controllers
                 UserManager userManager = new UserManager();
                 BusinessLayerResult<User> res = userManager.RegisterUser(registerViewModel);
 
-                if (res.Errors.Count > 0)
+                if (res.ErrorMessageObj.Count > 0)
                 {
-                    res.Errors.ForEach(x => ModelState.AddModelError("Errors from database", x));
+                    res.ErrorMessageObj.ForEach(x => ModelState.AddModelError("", x.Message));
+
+                    //res.Errors.ForEach(x => ModelState.AddModelError("Errors from database", x));
                     return View(registerViewModel);
                 }
 
@@ -75,7 +77,7 @@ namespace LibraryApp.WebApp.Controllers
         {
             return View();
         }
-          
+
         [HttpPost]
         public ActionResult LoginUser(LoginViewModel loginViewModel)
         {
@@ -86,9 +88,13 @@ namespace LibraryApp.WebApp.Controllers
 
                 if (res != null)
                 {
-                    if (res.Errors.Count > 0)
+                    if (res.ErrorMessageObj.Count > 0)
                     {
-                        res.Errors.ForEach(x => ModelState.AddModelError("Errors from database",x));
+
+                        res.ErrorMessageObj.ForEach(x => ModelState.AddModelError(" ", x.Message));
+
+
+                        //res.Errors.ForEach(x => ModelState.AddModelError("Errors from database",x));
                         return View(loginViewModel);
                     }
 
@@ -102,11 +108,10 @@ namespace LibraryApp.WebApp.Controllers
 
         public ActionResult LogOut()
         {
-            if(Session["login"] != null)
+            if (Session["login"] != null)
                 Session.RemoveAll();
 
             return RedirectToAction("Index");
         }
     }
-
 }
