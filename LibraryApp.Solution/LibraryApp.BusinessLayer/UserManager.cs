@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryApp.DataAccessLayer.EntityFramework;
+﻿using LibraryApp.DataAccessLayer.EntityFramework;
 using LibraryApp.Entities;
 using LibraryApp.Entities.ModelViews;
 
@@ -11,20 +6,50 @@ namespace LibraryApp.BusinessLayer
 {
     public class UserManager
     {
-        public User RegisterUser(User user)
+        public BusinessLayerResult<User> RegisterUser(RegisterViewModel registerViewModel)
         {
+            Repository<User> repositoryUser = new Repository<User>();
+            BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
 
-            Repository<User>  repositoryUser = new Repository<User>();
 
-            var resultUser = repositoryUser.Find(x => x.Email == user.Email || x.Username == user.Username);
+            var resultUser = repositoryUser.Find(x => x.Email == registerViewModel.Email || x.Username == registerViewModel.Username);
 
             if (resultUser != null)
             {
-                repositoryUser.Insert(resultUser);
+
+                if (resultUser.Email == registerViewModel.Email)
+                {
+                    businessLayerResult.Errors.Add("Bu email kullanılıyor");
+                }
+                if (resultUser.Username == registerViewModel.Username)
+                {
+                    businessLayerResult.Errors.Add("Bu kullanıcı adı kullanılıyor");
+                }
+
+            }
+            else
+            {
+                var newUser = new User()
+                {
+                    Email = registerViewModel.Email,
+                    Username = registerViewModel.Username,
+                    Name = registerViewModel.Name,
+                    Surname = registerViewModel.Surname,
+                    Password = registerViewModel.Password
+                };
+
+                var isUserInserted = repositoryUser.Insert(newUser);
                 
+
+                if (isUserInserted > 0)
+                {
+                    businessLayerResult.BlResult = newUser;
+                }
+
+
             }
 
-            return resultUser;
+            return businessLayerResult;
         }
     }
 }

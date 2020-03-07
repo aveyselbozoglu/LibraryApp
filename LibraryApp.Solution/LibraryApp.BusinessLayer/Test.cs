@@ -32,6 +32,7 @@ namespace LibraryApp.BusinessLayer
                 Password = "aasdad",
                 Username = "aasdasdasdsd",
             };
+            
 
 
             repo_user.Insert(q);

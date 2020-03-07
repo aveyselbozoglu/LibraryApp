@@ -1,7 +1,6 @@
 ﻿@using LibraryApp.Entities
 @model List<Book>
 
-
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">@ViewBag.CategoryName kitapları</h1>
@@ -27,7 +26,6 @@
                                 <th>Kitap Yayın Tarihi</th>
                                 <th>Kitap Sayfa Sayısı</th>
                                 <th>Kitap Dili</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -51,6 +49,7 @@
                                     <td>@el.PageCount</td>
                                     <td>@el.Language</td>
                                     <td>@el.Borrows.Count</td>
+
                                     @*<td>
                                             <button href="~/Home/Book/@el.Id" class="btn btn-success"><span class="fa fa-address-book-o"></span></button>
                                         </td>*@

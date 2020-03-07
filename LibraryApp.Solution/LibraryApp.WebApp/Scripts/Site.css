@@ -1,5 +1,8 @@
 ﻿.validation-summary-errors {
-    background-color: lightblue;
+    background-color: red;
+    border: 1px solid black;
+    color: #000000;
+    font-weight: 600;
     padding: 5px;
     margin: 10px;
     font-family: Georgia;
@@ -10,10 +13,10 @@
         list-style-type: none;
     }
 
-.validation-summary-errors{
+/*.validation-summary-errors{
     background-color:#D9FFB2;
     border: 1px solid #5CBA30;
     color:#000000;
     margin-top:15px;
     margin-bottom:15px;
-}
+}*/
