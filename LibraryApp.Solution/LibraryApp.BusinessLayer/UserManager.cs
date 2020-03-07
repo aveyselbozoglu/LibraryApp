@@ -11,12 +11,10 @@ namespace LibraryApp.BusinessLayer
             Repository<User> repositoryUser = new Repository<User>();
             BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
 
-
             var resultUser = repositoryUser.Find(x => x.Email == registerViewModel.Email || x.Username == registerViewModel.Username);
 
             if (resultUser != null)
             {
-
                 if (resultUser.Email == registerViewModel.Email)
                 {
                     businessLayerResult.Errors.Add("Bu email kullanılıyor");
@@ -25,7 +23,6 @@ namespace LibraryApp.BusinessLayer
                 {
                     businessLayerResult.Errors.Add("Bu kullanıcı adı kullanılıyor");
                 }
-
             }
             else
             {
@@ -39,17 +36,31 @@ namespace LibraryApp.BusinessLayer
                 };
 
                 var isUserInserted = repositoryUser.Insert(newUser);
-                
 
                 if (isUserInserted > 0)
                 {
                     businessLayerResult.BlResult = newUser;
                 }
-
-
             }
 
             return businessLayerResult;
+        }
+
+        public BusinessLayerResult<User> LoginUser(LoginViewModel loginViewModel)
+        {
+            Repository<User> repositoryUser = new Repository<User>();
+            BusinessLayerResult<User> blResult = new BusinessLayerResult<User>();
+
+            var resultUser = repositoryUser.Find(x => x.Email == loginViewModel.Email && x.Password == loginViewModel.Password);
+
+            if (resultUser != null)
+            {
+                blResult.Errors.Add("Bu E-posta adresi kullanılmaktadır.");
+            }
+
+            blResult.BlResult = resultUser;
+
+            return blResult;
         }
     }
 }

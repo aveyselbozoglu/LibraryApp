@@ -6,7 +6,7 @@ namespace LibraryApp.Entities.ModelViews
     {
         [Display(Name = "Ad"),
          Required(ErrorMessage = "{0} boş geçilemez"),
-         StringLength(25, ErrorMessage = "{0} 25 karakterden fazla olamaz")]
+         StringLength(25, ErrorMessage = "{0} {1} karakterden fazla olamaz")]
         public string Name { get; set; }
 
         [Display(Name = "Soyad"),
@@ -16,7 +16,7 @@ namespace LibraryApp.Entities.ModelViews
 
         [Display(Name = "Kullanıcı Adı"),
         Required(ErrorMessage = "{0} boş geçilemez"),
-         StringLength(25, ErrorMessage = "{0} adı 25 karakterden fazla olamaz")]
+         StringLength(25, ErrorMessage = "{0} 25 karakterden fazla olamaz")]
         public string Username { get; set; }
 
         [Display(Name = "E Posta"),

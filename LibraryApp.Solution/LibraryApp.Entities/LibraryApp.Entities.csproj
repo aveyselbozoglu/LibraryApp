@@ -56,6 +56,7 @@
     <Compile Include="Borrow.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="EntityBase.cs" />
+    <Compile Include="ModelViews\LoginViewModel.cs" />
     <Compile Include="ModelViews\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />

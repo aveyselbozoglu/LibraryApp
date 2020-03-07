@@ -67,11 +67,46 @@ namespace LibraryApp.WebApp.Controllers
                 }
 
                 return RedirectToAction("Index");
-
-
             }
             return View(registerViewModel);
-            
+        }
+
+        public ActionResult LoginUser()
+        {
+            return View();
+        }
+          
+        [HttpPost]
+        public ActionResult LoginUser(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                UserManager userManager = new UserManager();
+                BusinessLayerResult<User> res = userManager.LoginUser(loginViewModel);
+
+                if (res != null)
+                {
+                    if (res.Errors.Count > 0)
+                    {
+                        res.Errors.ForEach(x => ModelState.AddModelError("Errors from database",x));
+                        return View(loginViewModel);
+                    }
+
+                    Session["login"] = res.BlResult;
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(loginViewModel);
+        }
+
+        public ActionResult LogOut()
+        {
+            if(Session["login"] != null)
+                Session.RemoveAll();
+
+            return RedirectToAction("Index");
         }
     }
+
 }
