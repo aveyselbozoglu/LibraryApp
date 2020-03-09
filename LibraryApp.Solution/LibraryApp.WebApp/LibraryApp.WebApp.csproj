@@ -175,10 +175,8 @@
     <Content Include="Views\Home\RegisterUser.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\LoginUser.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\ShowProfile.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
-    <Content Include="Views\User\RemoveProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
