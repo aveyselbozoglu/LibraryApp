@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryApp.Entities;
 
 namespace LibraryApp.DataAccessLayer.EntityFramework
 {
-    public class Repository<T> : RepositoryBase where  T : class
+    public class Repository<T> : RepositoryBase where T : class
     {
-
         private DbSet<T> _objectSet;
+
         public Repository()
         {
-            _objectSet=_db.Set<T>();
-            
+            _objectSet = _db.Set<T>();
         }
+
         public List<T> List()
         {
             return _objectSet.ToList();
         }
 
-        public List<T> List(Expression<Func<T,bool>> where)
+        public List<T> List(Expression<Func<T, bool>> where)
         {
             return _objectSet.Where(where).ToList();
         }
@@ -31,7 +28,7 @@ namespace LibraryApp.DataAccessLayer.EntityFramework
         public int Insert(T obj)
         {
             _objectSet.Add(obj);
-            
+
             return Save();
         }
 
@@ -46,17 +43,14 @@ namespace LibraryApp.DataAccessLayer.EntityFramework
             return Save();
         }
 
-        public T Find(Expression<Func<T,bool>> where)
+        public T Find(Expression<Func<T, bool>> where)
         {
             return _objectSet.FirstOrDefault(where);
         }
-
 
         private int Save()
         {
             return _db.SaveChanges();
         }
-
-
     }
 }

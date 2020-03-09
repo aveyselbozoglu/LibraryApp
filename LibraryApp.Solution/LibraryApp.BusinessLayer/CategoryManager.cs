@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryApp.DataAccessLayer.EntityFramework;
+﻿using LibraryApp.DataAccessLayer.EntityFramework;
 using LibraryApp.Entities;
+using System.Collections.Generic;
 
 namespace LibraryApp.BusinessLayer
 {
@@ -14,17 +10,12 @@ namespace LibraryApp.BusinessLayer
 
         public List<Category> GetCategories()
         {
-
-            
             return (repositoryCategory.List());
-            
         }
-        
+
         public Category GetBookListByCategoryId(int? id)
         {
-            return repositoryCategory.Find(c =>  c.Id == id.Value);
-            
+            return repositoryCategory.Find(c => c.Id == id.Value);
         }
-
     }
 }

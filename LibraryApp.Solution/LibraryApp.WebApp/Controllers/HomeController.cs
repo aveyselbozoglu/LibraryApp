@@ -12,8 +12,11 @@ namespace LibraryApp.WebApp.Controllers
         {
             //Test um = new Test();
             //var z = um.GetUserList();
-            return View();
+
             // return View();
+            BookManager testBookManager = new BookManager();
+            testBookManager.GetBookList();
+            return View();
         }
 
         public ActionResult CategoryList()
@@ -90,9 +93,7 @@ namespace LibraryApp.WebApp.Controllers
                 {
                     if (res.ErrorMessageObj.Count > 0)
                     {
-
                         res.ErrorMessageObj.ForEach(x => ModelState.AddModelError(" ", x.Message));
-
 
                         //res.Errors.ForEach(x => ModelState.AddModelError("Errors from database",x));
                         return View(loginViewModel);

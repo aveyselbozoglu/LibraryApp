@@ -1,9 +1,12 @@
 ﻿@using LibraryApp.Entities
 @model User
 
-@{ ViewBag.Title = "Profiliniz"; }
-<div class="container-fluid">
+@{
+    ViewBag.Title = "Profiliniz";
 
+}
+
+<div class="container-fluid">
 
     <div class="row">
         <h2>@ViewBag.Title</h2>
@@ -22,12 +25,9 @@
                     <img src="~/Images/no-image-found.png" class="img-thumbnail" width="128" height="128" />
                 }
 
-
             }
         </div>
-        
-      
-        
+
         <div class="col-md-5">
 
             <h3>@Model.Name @Model.Surname</h3>
@@ -36,13 +36,53 @@
 
             <h5><b>Address : </b>TestAdres</h5>
             <h5><b>Borrows</b></h5>
-            <p>
-                @*@foreach (var el in Model.Borrows)
-                {
-                    @el.Book
-                }*@
-            </p>
 
+            @if (Model.Borrows != null)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Kitap Adı</th>
+                                <th>Kitap Yazar</th>
+                                <th>Ödünç Başlangıç</th>
+                                <th>Ödünç Son</th>
+                                <th>Geri Getirildi mi?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var el in Model.Borrows)
+                            {
+
+                                var color = el.IsLent ? "success" : "danger";
+
+                                <tr class="odd gradeA ">
+                                    <td>@el.Book.Name</td>
+                                    <td>@el.Book.Author</td>
+                                    <td>@el.BorrowedTime.Date.ToLongDateString()</td>
+                                    <td>@el.LentTime.Date.ToLongDateString()</td>
+                                    @if (el.IsLent)
+                                    {
+                                        <td>Evet</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@color">Hayır</td>
+                                    }
+
+                                    <td>
+                                        <a type="submit" href="~/Home/Book/@el.Book.Id" class="btn btn-success"><span class="fa fa-address-book-o"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p><b>Henüz Kitap Kiralamadınız..</b></p>
+            }
         </div>
         <div class="col-md-3">
             <div class="dropdown">
@@ -53,12 +93,8 @@
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="~/User/EditProfile/@Model.Id">Edit User</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="~/User/RemoveProfile/@Model.Id" onclick="return confirm('Are you sure ?');">Delete User</a></li>
-                    
                 </ul>
             </div>
         </div>
     </div>
-
-    
-
 </div>

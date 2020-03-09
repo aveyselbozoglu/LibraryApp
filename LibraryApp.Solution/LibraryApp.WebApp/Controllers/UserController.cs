@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using LibraryApp.BusinessLayer;
+﻿using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
+using System.Web.Mvc;
 
 namespace LibraryApp.WebApp.Controllers
 {
@@ -15,25 +11,32 @@ namespace LibraryApp.WebApp.Controllers
         {
             User currentUser = Session["login"] as User;
 
-                UserManager userManager = new UserManager();
-                BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
-                
-                businessLayerResult=userManager.GetUserById(currentUser.Id);
+            UserManager userManager = new UserManager();
+            BusinessLayerResult<User> businessLayerResultUser = new BusinessLayerResult<User>();
+            //BusinessLayerResult<Borrow> businessLayerResultBorrow = new BusinessLayerResult<Borrow>();
 
-                if (businessLayerResult.ErrorMessageObj.Count > 0)
-                {
-                    // todo : hata ekranı yönlendirmesi
-                }
+            //// deneme
 
-                return View(businessLayerResult.BlResult);
-                
+            //var listOfBorrowsById = userManager.GetBorrowsByUserId(currentUser.Id);
 
+            //TempData["ListOfDataById"] = listOfBorrowsById;
+
+            //deneme son
+            businessLayerResultUser = userManager.GetUserById(currentUser.Id);
+
+            if (businessLayerResultUser.ErrorMessageObj.Count > 0)
+            {
+                // todo : hata ekranı yönlendirmesi
+            }
+
+            return View(businessLayerResultUser.BlResult);
         }
 
         public ActionResult EditProfile()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult EditProfile(User user)
         {
@@ -43,7 +46,7 @@ namespace LibraryApp.WebApp.Controllers
         public ActionResult RemoveProfile(int id)
         {
             UserManager user = new UserManager();
-            BusinessLayerResult<User> businessLayerResult= user.RemoveUserById(id);
+            BusinessLayerResult<User> businessLayerResult = user.RemoveUserById(id);
             if (businessLayerResult.ErrorMessageObj.Count > 0)
             {
                 // todo : hata ekranı yönlendirmesi

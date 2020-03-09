@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryApp.DataAccessLayer.EntityFramework
+﻿namespace LibraryApp.DataAccessLayer.EntityFramework
 {
     // singleton patter
     public class RepositoryBase
     {
         protected static DatabaseContext _db;
-        
+
         private static object _lock = new object();
 
         protected RepositoryBase()
@@ -29,11 +23,9 @@ namespace LibraryApp.DataAccessLayer.EntityFramework
                         _db = new DatabaseContext();
                     }
                 }
-
             }
 
             return _db;
         }
-        
     }
 }

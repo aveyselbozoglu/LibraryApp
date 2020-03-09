@@ -25,10 +25,6 @@ namespace LibraryApp.BusinessLayer
                     //});
 
                     businessLayerResult.AddError(ErrorMessageCode.EmailAlreadyUsed, "Bu email kullanılıyor");
-
-
-
-
                 }
                 if (resultUser.Username == registerViewModel.Username)
                 {
@@ -78,7 +74,6 @@ namespace LibraryApp.BusinessLayer
 
                 //businessLayerResult.ErrorMessageObj.Add(new ErrorMessageObj()
                 //{
-
                 //    Code = ErrorMessageCode.EmailOrPassWrong,
                 //    Message = "Böyle bir kayıt bulunmamaktadır."
                 //});
@@ -95,21 +90,27 @@ namespace LibraryApp.BusinessLayer
         {
             BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
             Repository<User> repositoryUser = new Repository<User>();
-            businessLayerResult.BlResult =repositoryUser.Find(x => x.Id == id);
 
             // deneme
 
+            //Repository<Borrow> repositoryBorrow = new Repository<Borrow>();
+            //var borrowsByUserId =repositoryBorrow.Find(x => x.User.Id == id);
+
+            //if (borrowsByUserId != null)
+            //{
+            //    return borrowsByUserId;
+            //}
+
+            // denemeson
+
+            businessLayerResult.BlResult = repositoryUser.Find(x => x.Id == id);
 
             if (businessLayerResult.BlResult == null)
             {
-
                 businessLayerResult.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı bulunamadı.");
             }
 
-            
-            
             return businessLayerResult;
-
         }
 
         public BusinessLayerResult<User> RemoveUserById(int id)
@@ -118,7 +119,7 @@ namespace LibraryApp.BusinessLayer
             Repository<User> repositoryUser = new Repository<User>();
 
             businessLayerResult.BlResult = repositoryUser.Find(x => x.Id == id);
-            
+
             if (businessLayerResult.BlResult != null)
             {
                 repositoryUser.Delete(businessLayerResult.BlResult);
@@ -130,5 +131,14 @@ namespace LibraryApp.BusinessLayer
 
             return businessLayerResult;
         }
+
+        //public List<Borrow> GetBorrowsByUserId(int? id)
+        //{
+        //    BusinessLayerResult<Borrow> businessLayerResult = new BusinessLayerResult<Borrow>();
+        //    Repository<Borrow> repositoryBorrow = new Repository<Borrow>();
+        //    var borrowsByUserId = repositoryBorrow.List(x => x.User.Id == id.Value);
+
+        //    return borrowsByUserId;
+        //}
     }
 }
