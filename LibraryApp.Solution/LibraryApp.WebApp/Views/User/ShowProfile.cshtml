@@ -1,0 +1,64 @@
+﻿@using LibraryApp.Entities
+@model User
+
+@{ ViewBag.Title = "Profiliniz"; }
+<div class="container-fluid">
+
+
+    <div class="row">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @{
+                if (Model.ProfileImageFileName != null)
+                {
+                    <img src="~/Images/@Model.ProfileImageFileName" class="img-thumbnail" width="128" height="128" />
+                }
+                else
+                {
+                    <img src="~/Images/no-image-found.png" class="img-thumbnail" width="128" height="128" />
+                }
+
+
+            }
+        </div>
+        
+      
+        
+        <div class="col-md-5">
+
+            <h3>@Model.Name @Model.Surname</h3>
+
+            <h5><b>Email : </b>@Model.Email</h5>
+
+            <h5><b>Address : </b>TestAdres</h5>
+            <h5><b>Borrows</b></h5>
+            <p>
+                @*@foreach (var el in Model.Borrows)
+                {
+                    @el.Book
+                }*@
+            </p>
+
+        </div>
+        <div class="col-md-3">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                    Settings
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="~/User/EditProfile/@Model.Id">Edit User</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="~/User/RemoveProfile/@Model.Id" onclick="return confirm('Are you sure ?');">Delete User</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>

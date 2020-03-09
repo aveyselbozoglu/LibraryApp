@@ -5,7 +5,8 @@
 
         EmailAlreadyUsed = 100,
         UsernameAlreadyUsed = 101,
-        EmailOrPassWrong = 200
+        EmailOrPassWrong = 200,
+        UserNotFound = 201,
 
     }
 }

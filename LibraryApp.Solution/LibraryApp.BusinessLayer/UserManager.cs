@@ -90,5 +90,45 @@ namespace LibraryApp.BusinessLayer
 
             return businessLayerResult;
         }
+
+        public BusinessLayerResult<User> GetUserById(int? id)
+        {
+            BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
+            Repository<User> repositoryUser = new Repository<User>();
+            businessLayerResult.BlResult =repositoryUser.Find(x => x.Id == id);
+
+            // deneme
+
+
+            if (businessLayerResult.BlResult == null)
+            {
+
+                businessLayerResult.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı bulunamadı.");
+            }
+
+            
+            
+            return businessLayerResult;
+
+        }
+
+        public BusinessLayerResult<User> RemoveUserById(int id)
+        {
+            BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
+            Repository<User> repositoryUser = new Repository<User>();
+
+            businessLayerResult.BlResult = repositoryUser.Find(x => x.Id == id);
+            
+            if (businessLayerResult.BlResult != null)
+            {
+                repositoryUser.Delete(businessLayerResult.BlResult);
+            }
+            else
+            {
+                businessLayerResult.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı bulunamadı");
+            }
+
+            return businessLayerResult;
+        }
     }
 }
