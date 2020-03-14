@@ -12,7 +12,8 @@ namespace LibraryApp.BusinessLayer
             Repository<User> repositoryUser = new Repository<User>();
             BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
 
-            var resultUser = repositoryUser.Find(x => x.Email == registerViewModel.Email || x.Username == registerViewModel.Username);
+            var resultUser = repositoryUser.Find(x =>
+                x.Email == registerViewModel.Email || x.Username == registerViewModel.Username);
 
             if (resultUser != null)
             {
@@ -26,6 +27,7 @@ namespace LibraryApp.BusinessLayer
 
                     businessLayerResult.AddError(ErrorMessageCode.EmailAlreadyUsed, "Bu email kullanılıyor");
                 }
+
                 if (resultUser.Username == registerViewModel.Username)
                 {
                     businessLayerResult.ErrorMessageObj.Add(new ErrorMessageObj()
@@ -66,7 +68,8 @@ namespace LibraryApp.BusinessLayer
             Repository<User> repositoryUser = new Repository<User>();
             BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
 
-            var resultUser = repositoryUser.Find(x => x.Email == loginViewModel.Email && x.Password == loginViewModel.Password);
+            var resultUser = repositoryUser.Find(x =>
+                x.Email == loginViewModel.Email && x.Password == loginViewModel.Password);
 
             if (resultUser == null)
             {
@@ -140,5 +143,32 @@ namespace LibraryApp.BusinessLayer
 
         //    return borrowsByUserId;
         //}
+
+        public BusinessLayerResult<User> UpdateUser(User user)
+        {
+            Repository<User> repositoryUser = new Repository<User>();
+            BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
+
+            businessLayerResult.BlResult = repositoryUser.Find(x => x.Id == user.Id && (x.Email == user.Email));
+
+            if (businessLayerResult.BlResult == null)
+            {
+                //
+                businessLayerResult.AddError(ErrorMessageCode.UserNotFound, "Böyle bir kullanıcı bulunamadı");
+            }
+            else
+            {
+                businessLayerResult.BlResult.Email = user.Email;
+                businessLayerResult.BlResult.Name = user.Name;
+                businessLayerResult.BlResult.Surname = user.Surname;
+                businessLayerResult.BlResult.Password = user.Password;
+                businessLayerResult.BlResult.ProfileImageFileName = user.ProfileImageFileName;
+                businessLayerResult.BlResult.Username = user.Username;
+
+                repositoryUser.Update(businessLayerResult.BlResult);
+            }
+
+            return businessLayerResult;
+        }
     }
 }

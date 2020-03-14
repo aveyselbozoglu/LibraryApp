@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
 
-    <div class="row">
+    <div class="row" style="margin-top: 20px">
         <h2>@ViewBag.Title</h2>
         <hr />
     </div>
@@ -19,13 +19,18 @@
                 if (Model.ProfileImageFileName != null)
                 {
                     <img src="~/Images/@Model.ProfileImageFileName" class="img-thumbnail" width="128" height="128" />
+                    
                 }
                 else
                 {
                     <img src="~/Images/no-image-found.png" class="img-thumbnail" width="128" height="128" />
+                    
+                    
                 }
 
             }
+            @*<input type="file" name="ProfileImage" id="ProfileImage" class="form-control" /><br />
+            <span><i>Lütfen jpg, jpeg ya da png formatı kullanın.</i></span>*@
         </div>
 
         <div class="col-md-5">
@@ -35,10 +40,12 @@
             <h5><b>Email : </b>@Model.Email</h5>
 
             <h5><b>Address : </b>TestAdres</h5>
-            <h5><b>Borrows</b></h5>
+            <hr />
 
-            @if (Model.Borrows != null)
+
+            @if (Model.Borrows.Count > 0)
             {
+                <h5><b>Kiralanan Kitaplar</b></h5>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
@@ -63,7 +70,7 @@
                                     <td>@el.LentTime.Date.ToLongDateString()</td>
                                     @if (el.IsLent)
                                     {
-                                        <td>Evet</td>
+                                        <td class="@color">Evet</td>
                                     }
                                     else
                                     {

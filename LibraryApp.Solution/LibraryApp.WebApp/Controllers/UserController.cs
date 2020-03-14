@@ -34,13 +34,26 @@ namespace LibraryApp.WebApp.Controllers
 
         public ActionResult EditProfile()
         {
-            return View();
+            User user = Session["login"] as User;
+
+            return View(user);
         }
 
         [HttpPost]
-        public ActionResult EditProfile(User user)
+        public ActionResult EditProfile(User modelUser)
         {
-            return View();
+            ModelState.Remove("ProfileImageFileName");
+
+            BusinessLayerResult<User> businessLayerResultUser = new BusinessLayerResult<User>();
+            UserManager userManager = new UserManager();
+            if (ModelState.IsValid)
+            {
+                businessLayerResultUser = userManager.UpdateUser(modelUser);
+
+                Session["login"] = businessLayerResultUser.BlResult;
+            }
+
+            return RedirectToAction("ShowProfile");
         }
 
         public ActionResult RemoveProfile(int id)
