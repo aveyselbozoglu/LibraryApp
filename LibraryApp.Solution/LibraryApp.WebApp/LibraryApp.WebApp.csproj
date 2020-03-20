@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -171,12 +172,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\CategoryList.cshtml" />
     <Content Include="Views\Home\BookList.cshtml" />
-    <Content Include="Views\Home\Book.cshtml" />
+    <Content Include="Views\Home\BookByCategory.cshtml" />
     <Content Include="Views\Home\RegisterUser.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\LoginUser.cshtml" />
     <Content Include="Views\User\ShowProfile.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\Book\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -33,7 +33,7 @@ namespace LibraryApp.WebApp.Controllers
             return View(bookManager.GetBookList());
         }
 
-        public ActionResult Book(int? id)
+        public ActionResult BookByCategory(int? id)
         {
             CategoryManager categoryManager = new CategoryManager();
             if (id != null)

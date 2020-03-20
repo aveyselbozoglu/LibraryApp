@@ -13,7 +13,7 @@
                     DataTables Advanced Tables
                 </div>*@
             <!-- /.panel-heading -->
-            <div class="panel-body col-md-6">
+            <div class="panel-body col-md-9">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
@@ -25,6 +25,7 @@
                                 <th>Kitap Yayın Tarihi</th>
                                 <th>Kitap Sayfa Sayısı</th>
                                 <th>Kitap Dili</th>
+                                @*<th>Kirala</th>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -34,9 +35,9 @@
                                 <td>@el.Id</td>
                                 <td>@el.Name</td>
                                 <td>@el.Author</td>
-                                
+
                                 <!--  özetin lengthi 40dan büyükse ve sonu " "  ile bitmiyorsa
-                                     40-60 arası ilk " "'in indexini al ve, o boşluğa kadar yaz   ,    -->
+         40-60 arası ilk " "'in indexini al ve, o boşluğa kadar yaz   ,    -->
                                 @if (el.Summary.Length > 40 && el.Summary.Substring(0, 40).EndsWith(" "))
                                 {
                                     <td>@el.Summary.Substring(0, 40)..</td>
@@ -45,15 +46,26 @@
                                 {
                                     var indexOfFirstBlank = @el.Summary.Substring(40, 60)
                                         .IndexOf(" ", StringComparison.Ordinal);
-                                    <td>@el.Summary.Substring(0, indexOfFirstBlank+40)..</td>
+                                    <td>@el.Summary.Substring(0, indexOfFirstBlank + 40)..</td>
                                 }
                                 <td>@el.PublishedDate</td>
                                 <td>@el.PageCount</td>
                                 <td>@el.Language</td>
+                                @{
+                                    if (el.IsAvailable && Session["login"]!=null)
+                                    {
+                                        <td><a href="~/Book/RentBookById/@el.Id" class="btn btn-success" onclick="return confirm('Are you sure ?');">Ödünç Al</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>Uygun Değil!</td>
+                                    }
 
+                                }
+                                @*<td>Kirala</td>*@
                                 @*<td>
-                                    <button href="~/Home/Book/@el.Id" class="btn btn-success"><span class="fa fa-address-book-o"></span></button>
-                                </td>*@
+            <button href="~/Home/Book/@el.Id" class="btn btn-success"><span class="fa fa-address-book-o"></span></button>
+        </td>*@
                             </tr>
                             }
                         </tbody>
