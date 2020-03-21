@@ -6,7 +6,7 @@
 
 <h2>EditProfile</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditProfile", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -18,7 +18,7 @@
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-8">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                
+
             </div>
         </div>
 
@@ -63,19 +63,19 @@
                         <img src="~/Images/no-image-found.png" class="img-thumbnail" width="128" height="128" />
                     }
                 }
-                @*<input type="file" name="ProfileImage" id="ProfileImage" class="form-control" /><br />
-                    <span><i>Lütfen jpg, jpeg ya da png formatı kullanın.</i></span>*@
+                <input type="file" name="ProfileImage" id="ProfileImage" class="form-control" /><br />
+                <span><i>Lütfen jpg, jpeg ya da png formatı kullanın.</i></span>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8">
-                <input type="submit" value="Edit" class="btn btn-primary" style="width:5.88em" onclick="confirm('Kullanıcıyı güncellemek istediğinize emin misiniz?')"/>
+                <input type="submit" value="Edit" class="btn btn-primary" style="width:5.88em" onclick="confirm('Kullanıcıyı güncellemek istediğinize emin misiniz?')" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-8">
-                @Html.ActionLink("Geri Dön","ShowProfile",null,new{ @class="btn btn-info"})
+                @Html.ActionLink("Geri Dön", "ShowProfile", null, new { @class = "btn btn-info" })
             </div>
         </div>
     </div>

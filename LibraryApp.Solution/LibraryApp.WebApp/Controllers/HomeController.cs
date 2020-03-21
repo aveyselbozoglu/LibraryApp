@@ -35,6 +35,13 @@ namespace LibraryApp.WebApp.Controllers
             return View(bookManager.GetBookList());
         }
 
+        public ActionResult BookListAvailable()
+        {
+            var bookManager = new BookManager();
+
+            return View(bookManager.GetBookListAvailable());
+        }
+
         public ActionResult BookByCategory(int? id)
         {
             CategoryManager categoryManager = new CategoryManager();

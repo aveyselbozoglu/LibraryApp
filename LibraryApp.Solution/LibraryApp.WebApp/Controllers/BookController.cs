@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using LibraryApp.BusinessLayer;
+﻿using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
+using LibraryApp.WebApp.NotifyModels;
+using System.Web.Mvc;
 
 namespace LibraryApp.WebApp.Controllers
 {
@@ -13,6 +9,7 @@ namespace LibraryApp.WebApp.Controllers
     {
         private BusinessLayerResult<Borrow> blResultBorrow = new BusinessLayerResult<Borrow>();
         private BusinessLayerResult<Book> blResultBook = new BusinessLayerResult<Book>();
+
         // GET: Book
         public ActionResult Index()
         {
@@ -20,37 +17,47 @@ namespace LibraryApp.WebApp.Controllers
         }
 
         // GET: Book
-        public ActionResult RentBookById(int? id)
+        public ActionResult RentBookById(int id)
         {
-            if (id != null)
-            {
-                User currentUser= Session["login"] as User;
-                BookManager bookManager = new BookManager();
-                blResultBorrow=bookManager.RentBookById(id, currentUser);
-                if (blResultBorrow.BlResult != null)
-                {
-                    TempData["message"] = "Kitap kiralandı";
-                }
-                
-            }
+            User currentUser = Session["login"] as User;
+            BookManager bookManager = new BookManager();
+            blResultBorrow = bookManager.RentBookById(id, currentUser);
 
-            return RedirectToAction("ShowProfile", "User");
+            if (blResultBorrow.BlResult == null)
+            {
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    Items = blResultBorrow.ErrorMessageObj,
+                };
+                return View("Error", errorViewModel);
+            }
+            OkViewModel okViewModel = new OkViewModel()
+            {
+                Title = "Kitap ödünç alındı , lütfen 15 gün içinde iade ediniz.."
+            };
+            return View("Ok", okViewModel);
         }
 
-        public ActionResult LentBookById(int? id)
+        public ActionResult LentBookById(int id)
         {
-            if (id != null)
+            BookManager bookManager = new BookManager();
+            blResultBorrow = bookManager.LentBookById(id);
+            if (blResultBorrow.BlResult == null)
             {
-                
-                BookManager bookManager = new BookManager();
-                blResultBorrow = bookManager.LentBookById(id);
-                if (blResultBorrow.BlResult != null)
+                OkViewModel okViewModel = new OkViewModel()
                 {
-                    TempData["message"] = "Kitap ödünç verildi";
-                }
+                    Title = "Kitap iade ettiniz..",
+                    RedirectingUrl = "/User/ShowProfile"
+                };
+                return View("Ok", okViewModel);
             }
 
-            return RedirectToAction("ShowProfile", "User");
-;        }
+            ErrorViewModel errorViewModel = new ErrorViewModel()
+            {
+                Items = blResultBorrow.ErrorMessageObj,
+            };
+            return View("Error", errorViewModel);
+            ;
+        }
     }
 }

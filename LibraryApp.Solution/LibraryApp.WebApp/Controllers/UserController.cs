@@ -1,4 +1,5 @@
-﻿using LibraryApp.BusinessLayer;
+﻿using System.Web;
+using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
 using LibraryApp.WebApp.NotifyModels;
 using System.Web.Mvc;
@@ -43,14 +44,24 @@ namespace LibraryApp.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProfile(User modelUser)
+        public ActionResult EditProfile(User modelUser,HttpPostedFileBase ProfileImage)
         {
-            ModelState.Remove("ProfileImageFileName");
+            //ModelState.Remove("ProfileImageFileName");
 
             BusinessLayerResult<User> businessLayerResultUser = new BusinessLayerResult<User>();
             UserManager userManager = new UserManager();
             if (ModelState.IsValid)
             {
+                if (ProfileImage != null &&
+                    (ProfileImage.ContentType == "image/jpg" ||
+                    ProfileImage.ContentType == "image/jpeg" ||
+                    ProfileImage.ContentType == "image/png"))
+                {
+                    string filename = $"user_{modelUser.Id}.{ProfileImage.ContentType.Split('/')[1]}";
+                    ProfileImage.SaveAs(Server.MapPath($"/Images/{filename}"));
+                    modelUser.ProfileImageFileName = filename;
+                }
+                   
                 businessLayerResultUser = userManager.UpdateUser(modelUser);
 
                 if (businessLayerResultUser.ErrorMessageObj.Count > 0)
@@ -83,7 +94,12 @@ namespace LibraryApp.WebApp.Controllers
             BusinessLayerResult<User> businessLayerResult = user.RemoveUserById(id);
             if (businessLayerResult.ErrorMessageObj.Count > 0)
             {
-                // todo : hata ekranı yönlendirmesi
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    RedirectingUrl = "/User/ShowProfile",
+                    Items = businessLayerResult.ErrorMessageObj
+                };
+                return View("Error", errorViewModel);
             }
 
             Session.RemoveAll();

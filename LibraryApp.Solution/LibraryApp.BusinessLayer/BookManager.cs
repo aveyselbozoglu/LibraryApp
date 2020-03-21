@@ -20,6 +20,11 @@ namespace LibraryApp.BusinessLayer
             return repositoryBook.List();
         }
 
+        public List<Book> GetBookListAvailable()
+        {
+            return repositoryBook.List(x => x.IsAvailable);
+        }
+
         public BusinessLayerResult<Borrow> RentBookById(int? id, User user)
         {
             if (id == null)

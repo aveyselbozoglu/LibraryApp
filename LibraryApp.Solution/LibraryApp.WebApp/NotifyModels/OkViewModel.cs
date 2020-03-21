@@ -12,7 +12,7 @@ namespace LibraryApp.WebApp.NotifyModels
             Title = "Başarılı İşlem";
             IsRedirecting = true;
             RedirectingUrl = "/Home/Index";
-            RedirectingTimeout = 3000;
+            RedirectingTimeout = 1500;
         }
     }
 }
