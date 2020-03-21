@@ -1,5 +1,6 @@
 ﻿using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
+using LibraryApp.WebApp.NotifyModels;
 using System.Web.Mvc;
 
 namespace LibraryApp.WebApp.Controllers
@@ -13,21 +14,23 @@ namespace LibraryApp.WebApp.Controllers
 
             UserManager userManager = new UserManager();
             BusinessLayerResult<User> businessLayerResultUser = new BusinessLayerResult<User>();
-            //BusinessLayerResult<Borrow> businessLayerResultBorrow = new BusinessLayerResult<Borrow>();
 
-            //// deneme
-
-            //var listOfBorrowsById = userManager.GetBorrowsByUserId(currentUser.Id);
-
-            //TempData["ListOfDataById"] = listOfBorrowsById;
-
-            //deneme son
             businessLayerResultUser = userManager.GetUserById(currentUser.Id);
 
             if (businessLayerResultUser.ErrorMessageObj.Count > 0)
             {
-                // todo : hata ekranı yönlendirmesi
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    Title = "Hata Oluştu",
+                    Items = businessLayerResultUser.ErrorMessageObj,
+                };
+                return View("Error", errorViewModel);
             }
+
+            AddressManager addressManager = new AddressManager();
+            var businessLayerResultAddress = addressManager.GetAllAddressesByUserId(currentUser.Id);
+
+            TempData["addresses"] = businessLayerResultAddress.BlResultList;
 
             return View(businessLayerResultUser.BlResult);
         }
@@ -50,10 +53,28 @@ namespace LibraryApp.WebApp.Controllers
             {
                 businessLayerResultUser = userManager.UpdateUser(modelUser);
 
-                Session["login"] = businessLayerResultUser.BlResult;
-            }
+                if (businessLayerResultUser.ErrorMessageObj.Count > 0)
+                {
+                    ErrorViewModel errorViewModel = new ErrorViewModel()
+                    {
+                        Items = businessLayerResultUser.ErrorMessageObj,
+                        RedirectingUrl = "/User/ShowProfile"
+                    };
+                    return View("Error", errorViewModel);
+                }
 
-            return RedirectToAction("ShowProfile");
+                Session["login"] = businessLayerResultUser.BlResult;
+                OkViewModel okViewModel = new OkViewModel()
+                {
+                    Title = "Kullanıcı güncellendi",
+                    RedirectingUrl = "/User/ShowProfile"
+                };
+                return View("Ok", okViewModel);
+            }
+            else
+            {
+                return View(modelUser);
+            }
         }
 
         public ActionResult RemoveProfile(int id)

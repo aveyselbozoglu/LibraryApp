@@ -1,6 +1,8 @@
 ﻿using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
+using LibraryApp.Entities.Messages;
 using LibraryApp.Entities.ModelViews;
+using LibraryApp.WebApp.NotifyModels;
 using System.Web.Mvc;
 
 namespace LibraryApp.WebApp.Controllers
@@ -71,7 +73,16 @@ namespace LibraryApp.WebApp.Controllers
                     return View(registerViewModel);
                 }
 
-                return RedirectToAction("Index");
+                OkViewModel okViewModel = new OkViewModel();
+                okViewModel.Items.Add(new ErrorMessageObj()
+                {
+                    Code = ErrorMessageCode.EmailOrPassWrong,
+                    Message = "Kayıt işleminiz Başarılı",
+                });
+
+                okViewModel.RedirectingUrl = "/Home/LoginUser";
+                //return RedirectToAction("Index");
+                return View("Ok", okViewModel);
             }
             return View(registerViewModel);
         }
@@ -100,7 +111,13 @@ namespace LibraryApp.WebApp.Controllers
                     }
 
                     Session["login"] = res.BlResult;
-                    return RedirectToAction("Index");
+
+                    OkViewModel okViewModel = new OkViewModel()
+                    {
+                        Title = "Giriş yaptınız"
+                    };
+                    //return RedirectToAction("Index");
+                    return View("Ok", okViewModel);
                 }
             }
 

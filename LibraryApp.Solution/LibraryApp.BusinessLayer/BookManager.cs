@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryApp.DataAccessLayer.EntityFramework;
+﻿using LibraryApp.DataAccessLayer.EntityFramework;
 using LibraryApp.Entities;
 using LibraryApp.Entities.Messages;
+using System;
+using System.Collections.Generic;
 
 namespace LibraryApp.BusinessLayer
 {
@@ -14,28 +11,26 @@ namespace LibraryApp.BusinessLayer
         private Repository<Book> repositoryBook = new Repository<Book>();
         private Repository<Category> repositoryCategory = new Repository<Category>();
         private Repository<Borrow> repositoryBorrow = new Repository<Borrow>();
+
         //private BusinessLayerResult<Book> businessLayerResult = new BusinessLayerResult<Book>();
         private BusinessLayerResult<Borrow> businessLayerResultBorrow = new BusinessLayerResult<Borrow>();
+
         public List<Book> GetBookList()
         {
-           return repositoryBook.List();
+            return repositoryBook.List();
         }
 
-
-        public BusinessLayerResult<Borrow> RentBookById(int? id,User user)
+        public BusinessLayerResult<Borrow> RentBookById(int? id, User user)
         {
-
             if (id == null)
             {
                 businessLayerResultBorrow.AddError(ErrorMessageCode.BookNotFound, "Kitap bulunamadı");
             }
 
-
-            var checkBook =repositoryBook.Find(b => b.Id == id);
+            var checkBook = repositoryBook.Find(b => b.Id == id);
 
             if (checkBook != null)
             {
-                
                 Borrow newBorrow = new Borrow()
                 {
                     Book = checkBook,
@@ -55,10 +50,9 @@ namespace LibraryApp.BusinessLayer
                 {
                     UpdateBookAfterBorrow(checkBook.Id);
                     businessLayerResultBorrow.BlResult = newBorrow;
-                    
                 }
             }
-            
+
             return businessLayerResultBorrow;
         }
 
@@ -88,18 +82,15 @@ namespace LibraryApp.BusinessLayer
             }
             else
             {
-
                 Borrow checkBorrow = repositoryBorrow.Find(b => b.Id == id);
 
                 if (checkBorrow != null)
                 {
-
                     checkBorrow.IsLent = true;
 
                     repositoryBorrow.Update(checkBorrow);
 
                     UpdateBookAfterBorrow(checkBorrow.Book.Id);
-
                 }
             }
 

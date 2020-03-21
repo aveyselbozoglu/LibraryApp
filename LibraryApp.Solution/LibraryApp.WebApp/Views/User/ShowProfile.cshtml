@@ -19,18 +19,17 @@
                 if (Model.ProfileImageFileName != null)
                 {
                     <img src="~/Images/@Model.ProfileImageFileName" class="img-thumbnail" width="128" height="128" />
-                    
+
                 }
                 else
                 {
                     <img src="~/Images/no-image-found.png" class="img-thumbnail" width="128" height="128" />
-                    
-                    
+
                 }
 
             }
             @*<input type="file" name="ProfileImage" id="ProfileImage" class="form-control" /><br />
-            <span><i>Lütfen jpg, jpeg ya da png formatı kullanın.</i></span>*@
+                <span><i>Lütfen jpg, jpeg ya da png formatı kullanın.</i></span>*@
         </div>
 
         <div class="col-md-6">
@@ -39,15 +38,37 @@
 
             <h5><b>Email : </b>@Model.Email</h5>
 
-            <h5><b>Address : </b>TestAdres</h5>
-            <hr />
+            @{
 
+                if (TempData["addresses"] != null)
+                {
+
+                    List<Address> addresses = TempData["addresses"] as List<Address>;
+                    int counter = 1;
+                    foreach (Address address in addresses)
+                    {
+
+                        <div class="well">
+                            <p>
+                                @counter. Address : @address.Street
+                                No : @address.BuildingNo
+                                @address.District / @address.City
+                                <a href="/Address/RemoveAddressById/@address.Id" class="btn btn-danger btn-sm" onclick="confirm('Are you sure ? ')">Sil</a>
+                            </p>
+
+                            @{
+                                counter++;
+                            }
+                        </div>
+                    }
+                } }
+            <hr />
 
             @if (Model.Borrows.Count > 0)
             {
                 @*@TempData["message"]*@
                 <h3><b>Kiralanan Kitaplar</b></h3>
-                <hr/>
+                <hr />
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
@@ -60,33 +81,34 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @foreach (var el in Model.Borrows)
                             {
 
                                 var color = el.IsLent ? "success" : "danger";
 
-                            <tr class="odd gradeA ">
-                                <td>@el.Book.Name</td>
-                                <td>@el.Book.Author</td>
-                                <td>@el.BorrowedTime.Date.ToLongDateString()</td>
-                                <td>@el.LentTime.Date.ToLongDateString()</td>
-                                @if (el.IsLent)
-                                {
-                                    <td class="@color">Evet</td>
-                                }
-                                else
-                                {
-                                    <td class="@color">Hayır</td>
-                                }
+                                <tr class="odd gradeA ">
+                                    <td>@el.Book.Name</td>
+                                    <td>@el.Book.Author</td>
+                                    <td>@el.BorrowedTime.Date.ToLongDateString()</td>
+                                    <td>@el.LentTime.Date.ToLongDateString()</td>
+                                    @if (el.IsLent)
+                                    {
+                                        <td class="@color">Evet</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@color">Hayır</td>
+                                    }
 
-                                @*<td>
-            <a type="submit" href="~/Home/Book/@el.Book.Id" class="btn btn-success"><span class="fa fa-address-book-o"></span></a>
-        </td>*@
-                                @if (!el.IsLent)
-                                {
-                                    <td><a href="~/Book/LentBookById/@el.Id" class="btn btn-success" onclick="return confirm('Are you sure ?');">Teslim Et</a></td>
-                                }
-                            </tr>
+                                    @*<td>
+                                            <a type="submit" href="~/Home/Book/@el.Book.Id" class="btn btn-success"><span class="fa fa-address-book-o"></span></a>
+                                        </td>*@
+                                    @if (!el.IsLent)
+                                    {
+                                        <td><a href="~/Book/LentBookById/@el.Id" class="btn btn-success" onclick="return confirm('Are you sure ?');">Teslim Et</a></td>
+                                    }
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -105,6 +127,10 @@
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                     <li role="presentation"><a class="btn-custom" role="menuitem" tabindex="-1" href="~/User/EditProfile/@Model.Id">Kullanıcı güncelle</a></li>
+                    <li role="presentation"><a class="btn-custom" role="menuitem" tabindex="-1" href="~/Address/AddAddress">Adres Ekle</a></li>
+
+                    @*<li role="presentation"><a class="btn-custom" role="menuitem" tabindex="-1" href="~/User/EditProfile/@Model.Id">Adres Sil</a></li>*@
+
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="~/User/RemoveProfile/@Model.Id" onclick="return confirm('Are you sure ?');">Kullanıcı sil</a></li>
                 </ul>
             </div>

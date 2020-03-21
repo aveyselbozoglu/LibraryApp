@@ -56,9 +56,13 @@
                                     {
                                         <td><a href="~/Book/RentBookById/@el.Id" class="btn btn-success" onclick="return confirm('Are you sure ?');">Ödünç Al</a></td>
                                     }
+                                    else if(Session["login"]==null)
+                                    {
+                                        
+                                    }
                                     else
                                     {
-                                        <td>Uygun Değil!</td>
+                                        <td>Uygun Değil</td>
                                     }
 
                                 }

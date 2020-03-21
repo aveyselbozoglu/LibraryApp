@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LibraryApp.Entities;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryApp.Entities;
 
 namespace LibraryApp.DataAccessLayer.EntityFramework
 {
@@ -15,8 +10,6 @@ namespace LibraryApp.DataAccessLayer.EntityFramework
         public DbSet<Category> Categories { get; set; }
         public DbSet<Borrow> Borrows { get; set; }
         public DbSet<Address> Addresses { get; set; }
-
-        
 
         public DatabaseContext()
         {
