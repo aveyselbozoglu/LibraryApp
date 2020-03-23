@@ -13,6 +13,7 @@ namespace LibraryApp.WebApp.NotifyModels
             IsRedirecting = true;
             RedirectingUrl = "/Home/Index";
             RedirectingTimeout = 1500;
+            Color = "success";
         }
     }
 }

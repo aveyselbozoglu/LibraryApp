@@ -158,6 +158,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -182,11 +183,13 @@
     <Content Include="Views\Home\LoginUser.cshtml" />
     <Content Include="Views\User\ShowProfile.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
-    <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Shared\Ok.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Address\AddAddress.cshtml" />
     <Content Include="Views\Home\BookListAvailable.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Book\AddBook.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,7 +1,7 @@
-﻿using System.Web;
-using LibraryApp.BusinessLayer;
+﻿using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
 using LibraryApp.WebApp.NotifyModels;
+using System.Web;
 using System.Web.Mvc;
 
 namespace LibraryApp.WebApp.Controllers
@@ -44,7 +44,7 @@ namespace LibraryApp.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProfile(User modelUser,HttpPostedFileBase ProfileImage)
+        public ActionResult EditProfile(User modelUser, HttpPostedFileBase ProfileImage)
         {
             //ModelState.Remove("ProfileImageFileName");
 
@@ -61,7 +61,7 @@ namespace LibraryApp.WebApp.Controllers
                     ProfileImage.SaveAs(Server.MapPath($"/Images/{filename}"));
                     modelUser.ProfileImageFileName = filename;
                 }
-                   
+
                 businessLayerResultUser = userManager.UpdateUser(modelUser);
 
                 if (businessLayerResultUser.ErrorMessageObj.Count > 0)

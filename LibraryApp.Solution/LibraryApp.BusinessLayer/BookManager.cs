@@ -12,7 +12,7 @@ namespace LibraryApp.BusinessLayer
         private Repository<Category> repositoryCategory = new Repository<Category>();
         private Repository<Borrow> repositoryBorrow = new Repository<Borrow>();
 
-        //private BusinessLayerResult<Book> businessLayerResult = new BusinessLayerResult<Book>();
+        private BusinessLayerResult<Book> businessLayerResultBook = new BusinessLayerResult<Book>();
         private BusinessLayerResult<Borrow> businessLayerResultBorrow = new BusinessLayerResult<Borrow>();
 
         public List<Book> GetBookList()
@@ -100,6 +100,37 @@ namespace LibraryApp.BusinessLayer
             }
 
             return businessLayerResultBorrow;
+        }
+
+        public BusinessLayerResult<Book> AddBook(Book book)
+        {
+            if (book != null)
+            {
+                Book newBook = new Book()
+                {
+                    Name = book.Name,
+                    Summary = book.Summary,
+                    Author = book.Author,
+                    PublishedDate = book.PublishedDate,
+                    Language = book.Language,
+                    PageCount = book.PageCount,
+                    Isbn = book.Isbn,
+                    Category = book.Category
+                };
+
+                var checkIsBookInserted = repositoryBook.Insert(newBook);
+
+                if (checkIsBookInserted > 0)
+                {
+                    businessLayerResultBook.BlResult = newBook;
+                }
+                else
+                {
+                    businessLayerResultBook.AddError(ErrorMessageCode.BookCouldNotAdded, "Kitap eklenemedi..");
+                }
+            }
+
+            return businessLayerResultBook;
         }
     }
 }

@@ -9,12 +9,7 @@ namespace LibraryApp.WebApp.Controllers
     {
         private BusinessLayerResult<Borrow> blResultBorrow = new BusinessLayerResult<Borrow>();
         private BusinessLayerResult<Book> blResultBook = new BusinessLayerResult<Book>();
-
-        // GET: Book
-        public ActionResult Index()
-        {
-            return View();
-        }
+        private BusinessLayerResult<Category> blResultCategory = new BusinessLayerResult<Category>();
 
         // GET: Book
         public ActionResult RentBookById(int id)
@@ -57,7 +52,44 @@ namespace LibraryApp.WebApp.Controllers
                 Items = blResultBorrow.ErrorMessageObj,
             };
             return View("Error", errorViewModel);
-            ;
+        }
+
+        public ActionResult AddBook()
+        {
+            blResultCategory.BlResultList = new CategoryManager().GetCategories();
+
+            if (blResultCategory.BlResultList != null)
+            {
+                ViewBag.Categories = new SelectList(blResultCategory.BlResultList, "Id", "Name");
+
+                // todo BOOKVIEWMODELLE OLMADI , ÇÜNKÜ VIEWMODELDE KATEGORi var direk , database modelimizde category_id olarak tutuluyor.
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddBook(Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                var blResultBook = new BookManager().AddBook(book);
+
+                if (blResultBook.ErrorMessageObj.Count > 0)
+                {
+                    ErrorViewModel errorViewModel = new ErrorViewModel()
+                    {
+                        Items = blResultBook.ErrorMessageObj
+                    };
+                    return View("Error", errorViewModel);
+                }
+                OkViewModel okViewModel = new OkViewModel()
+                {
+                    Title = "Yeni kitap eklendi.."
+                };
+                return View("Ok", okViewModel);
+            }
+            return View(book);
         }
     }
 }

@@ -27,6 +27,9 @@
     <!-- Custom Fonts -->
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 
+    <!-- DateTime Picker-->
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
     <!-- My Custom Css File -->
     <link href="~/Content/Site.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -44,6 +47,8 @@
     <script src="~/Scripts/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="~/Scripts/startmin.js"></script>
+    <!-- DateTime Picker-->
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -59,9 +64,18 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Top Navigation: Left Menu -->
-            @*<ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="~/Home/Index"><i class="fa fa-home fa-fw"></i> Main Page</a></li>
-                </ul>*@
+            <ul class="nav navbar-nav navbar-left navbar-top-links">
+                @{
+                                /**/
+
+                                User currentUser = Session["login"] as User;
+                }
+                @if (currentUser != null && currentUser.IsAdmin)
+                {
+                    <li><a href="~/Book/AddBook"><i class="fa fa-home fa-fw"></i> Kitap Ekle</a></li>
+
+                }
+            </ul>
             <!-- Top Navigation: Right Menu -->
             <ul class="nav navbar-right navbar-top-links">
 
@@ -73,7 +87,7 @@
                 }
                 else
                 {
-                    var currentUser = @Session["login"] as User;
+                    currentUser = @Session["login"] as User;
 
                     <li class="dropdown">
 
