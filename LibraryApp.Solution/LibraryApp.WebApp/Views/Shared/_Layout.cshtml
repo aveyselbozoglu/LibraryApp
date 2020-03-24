@@ -28,7 +28,8 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 
     <!-- DateTime Picker-->
-    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!-- My Custom Css File -->
     <link href="~/Content/Site.css" rel="stylesheet" />
@@ -46,9 +47,9 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="~/Scripts/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="~/Scripts/startmin.js"></script>
     <!-- DateTime Picker-->
-    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+
 </head>
 <body>
     <div id="wrapper">
@@ -66,15 +67,36 @@
             <!-- Top Navigation: Left Menu -->
             <ul class="nav navbar-nav navbar-left navbar-top-links">
                 @{
-                                /**/
+                    /**/
 
-                                User currentUser = Session["login"] as User;
+                    User currentUser = Session["login"] as User;
                 }
+                
+                <li class="dropdown">
                 @if (currentUser != null && currentUser.IsAdmin)
                 {
-                    <li><a href="~/Book/AddBook"><i class="fa fa-home fa-fw"></i> Kitap Ekle</a></li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Admin İşlemleri <i class="fa fa-user fa-fw"></i> <b class="caret"></b>
+                    </a>
 
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="~/Home/CategoryList"><i class="fa fa-user fa-fw"></i> Kategori Listele</a>
+                        </li>
+                        <li>
+                            <a href="~/Category/AddCategory"><i class="fa fa-gear fa-fw"></i> Kategori Ekle</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+
+                            <a href="~/Home/BookList"><i class="fa fa-sign-out fa-fw"></i> Kitap Listele</a>
+                        </li>
+
+                        <li><a href="~/Book/AddBook"><i class="fa fa-home fa-fw"></i> Kitap Ekle</a></li>
+
+                    </ul>
                 }
+                </li>
             </ul>
             <!-- Top Navigation: Right Menu -->
             <ul class="nav navbar-right navbar-top-links">
@@ -157,5 +179,9 @@
             </div>
         </div>
     </div>
+
+
 </body>
+
+
 </html>

@@ -26,10 +26,11 @@ namespace LibraryApp.Entities
         public DateTime PublishedDate { get; set; }
 
         [Display(Name = "Sayfa Sayısı"),
-         Required]
+         Required(ErrorMessage = "{0}  boş geçilemez")]
         public int PageCount { get; set; }
 
-        [Required]
+        [Display(Name = "Müsait"),
+         Required(ErrorMessage = "{0}  boş geçilemez")]
         public bool IsAvailable { get; set; }
 
         [Display(Name = "ISBN"),

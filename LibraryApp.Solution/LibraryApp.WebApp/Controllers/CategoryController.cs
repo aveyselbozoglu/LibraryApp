@@ -14,7 +14,7 @@ namespace LibraryApp.WebApp.Controllers
         }
 
         // GET: Category/Create
-        public ActionResult Create()
+        public ActionResult AddCategory()
         {
             return View();
         }
@@ -24,7 +24,7 @@ namespace LibraryApp.WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult AddCategory(Category category)
         {
             if (ModelState.IsValid)
             {
@@ -41,14 +41,15 @@ namespace LibraryApp.WebApp.Controllers
             }
             OkViewModel okViewModel = new OkViewModel()
             {
-                RedirectingUrl = "/Category/Index"
+                RedirectingUrl = "/Category/Index",
+                Title = "Kategori Eklendi"
             };
 
             return View("Ok", okViewModel);
         }
 
         // GET: Category/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteCategory(int? id)
         {
             if (id == null)
             {
@@ -64,14 +65,16 @@ namespace LibraryApp.WebApp.Controllers
             {
                 ErrorViewModel errorViewModel = new ErrorViewModel()
                 {
-                    Items = blResultCategory.ErrorMessageObj
+                    Items = blResultCategory.ErrorMessageObj,
+                    RedirectingUrl = "~/Home/CategoryList"
                 };
-                return View("Error", new ErrorViewModel());
+                return View("Error", errorViewModel);
             }
 
             OkViewModel okViewModel = new OkViewModel()
             {
-                Title = "Kategoriyi başarıyla sildiniz.."
+                Title = "Kategoriyi başarıyla sildiniz..",
+                RedirectingUrl = "~/Home/CategoryList"
             };
             return View("Ok", okViewModel);
         }

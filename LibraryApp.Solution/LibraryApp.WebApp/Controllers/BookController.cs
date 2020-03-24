@@ -11,7 +11,10 @@ namespace LibraryApp.WebApp.Controllers
         private BusinessLayerResult<Book> blResultBook = new BusinessLayerResult<Book>();
         private BusinessLayerResult<Category> blResultCategory = new BusinessLayerResult<Category>();
 
-        // GET: Book
+
+
+
+        
         public ActionResult RentBookById(int id)
         {
             User currentUser = Session["login"] as User;
@@ -54,6 +57,8 @@ namespace LibraryApp.WebApp.Controllers
             return View("Error", errorViewModel);
         }
 
+
+
         public ActionResult AddBook()
         {
             blResultCategory.BlResultList = new CategoryManager().GetCategories();
@@ -79,7 +84,8 @@ namespace LibraryApp.WebApp.Controllers
                 {
                     ErrorViewModel errorViewModel = new ErrorViewModel()
                     {
-                        Items = blResultBook.ErrorMessageObj
+                        Items = blResultBook.ErrorMessageObj,
+                        RedirectingUrl = "/Book/AddBook"
                     };
                     return View("Error", errorViewModel);
                 }
@@ -90,6 +96,23 @@ namespace LibraryApp.WebApp.Controllers
                 return View("Ok", okViewModel);
             }
             return View(book);
+        }
+
+        public ActionResult DeleteBook(int? id)
+        {
+            blResultBook = new BookManager().RemoveBookById(id);
+
+            if (blResultBook.ErrorMessageObj.Count > 0)
+            {
+                ErrorViewModel errorViewModel = new ErrorViewModel()
+                {
+                    RedirectingUrl = "/Home/BookList",
+                    Items = blResultBook.ErrorMessageObj
+                };
+                return View("Error", errorViewModel);
+            }
+
+            return RedirectToAction("BookList","Home");
         }
     }
 }

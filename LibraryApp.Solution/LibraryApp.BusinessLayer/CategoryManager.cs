@@ -27,7 +27,7 @@ namespace LibraryApp.BusinessLayer
             if (category != null)
             {
                 Category checkCategory = repositoryCategory.Find(x => x.Name == category.Name);
-                if (checkCategory != null)
+                if (checkCategory == null)
                 {
                     repositoryCategory.Insert(category);
                     businessLayerResultCategory.BlResult = category;

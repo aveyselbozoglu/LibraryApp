@@ -106,6 +106,13 @@ namespace LibraryApp.BusinessLayer
         {
             if (book != null)
             {
+
+                if (repositoryBook.Find(x => x.Isbn == book.Isbn) != null)
+                {
+                    businessLayerResultBook.AddError(ErrorMessageCode.IsbnAlreadyExists, "Bu ISBN veritabanında bulunmaktadır");
+                    return businessLayerResultBook;
+                }
+
                 Book newBook = new Book()
                 {
                     Name = book.Name,
@@ -115,7 +122,9 @@ namespace LibraryApp.BusinessLayer
                     Language = book.Language,
                     PageCount = book.PageCount,
                     Isbn = book.Isbn,
-                    Category = book.Category
+                    Category = book.Category,
+                    IsAvailable = book.IsAvailable,
+                    
                 };
 
                 var checkIsBookInserted = repositoryBook.Insert(newBook);
@@ -132,5 +141,33 @@ namespace LibraryApp.BusinessLayer
 
             return businessLayerResultBook;
         }
+
+        public BusinessLayerResult<Book> RemoveBookById(int? id)
+        {
+
+            businessLayerResultBook.BlResult = repositoryBook.Find(x => x.Id == id);
+
+            if (businessLayerResultBook.BlResult != null)
+            {
+
+                if (!businessLayerResultBook.BlResult.IsAvailable)
+                {
+                    businessLayerResultBook.AddError(ErrorMessageCode.BookCouldNotDeleted,"Kiralanmış kitabı silemezsiniz..");
+                }
+                else
+                {
+                    repositoryBook.Delete(businessLayerResultBook.BlResult);
+                }
+                
+            }
+            else
+            {
+                businessLayerResultBook.AddError(ErrorMessageCode.BookNotFound , "Silinecek kitap bulunamadı");
+            }
+
+            return businessLayerResultBook;
+        }
+
+      
     }
 }
