@@ -10,14 +10,22 @@ namespace LibraryApp.Entities
 {
     public class Address : EntityBase
     {
-        
-        [Required,StringLength(100)]
+
+        [Display(Name = "Sokak"),
+         Required(ErrorMessage = "{0}  boş geçilemez"),
+         StringLength(100, ErrorMessage = "{0} 100 karakterden fazla olamaz")]
         public string Street { get; set; }
-        [Required,StringLength(10)]
+        [Display(Name = "Bina No"),
+         Required(ErrorMessage = "{0}  boş geçilemez"),
+         StringLength(10, ErrorMessage = "{0} 10 karakterden fazla olamaz")]
         public string BuildingNo { get; set; }
-        [Required,StringLength(50)]
+        [Display(Name = "İlçe"),
+         Required(ErrorMessage = "{0}  boş geçilemez"),
+         StringLength(50, ErrorMessage = "{0} 50 karakterden fazla olamaz")]
         public string District { get; set; }
-        [Required,StringLength(50)]
+        [Display(Name = "İl"),
+         Required(ErrorMessage = "{0}  boş geçilemez"),
+         StringLength(50, ErrorMessage = "{0} 50 karakterden fazla olamaz")]
         public string City { get; set; }
 
 

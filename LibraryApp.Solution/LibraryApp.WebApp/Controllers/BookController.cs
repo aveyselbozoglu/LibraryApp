@@ -1,7 +1,10 @@
-﻿using LibraryApp.BusinessLayer;
+﻿using System.Collections.Generic;
+using System.Data;
+using LibraryApp.BusinessLayer;
 using LibraryApp.Entities;
 using LibraryApp.WebApp.NotifyModels;
 using System.Web.Mvc;
+using LibraryApp.Entities.ModelViews;
 
 namespace LibraryApp.WebApp.Controllers
 {
@@ -65,6 +68,9 @@ namespace LibraryApp.WebApp.Controllers
 
             if (blResultCategory.BlResultList != null)
             {
+
+                
+
                 ViewBag.Categories = new SelectList(blResultCategory.BlResultList, "Id", "Name");
 
                 // todo BOOKVIEWMODELLE OLMADI , ÇÜNKÜ VIEWMODELDE KATEGORi var direk , database modelimizde category_id olarak tutuluyor.
@@ -74,11 +80,11 @@ namespace LibraryApp.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddBook(Book book)
+        public ActionResult AddBook(AddBookViewModel addBookViewModel)
         {
             if (ModelState.IsValid)
             {
-                var blResultBook = new BookManager().AddBook(book);
+                var blResultBook = new BookManager().AddBook(addBookViewModel);
 
                 if (blResultBook.ErrorMessageObj.Count > 0)
                 {
@@ -93,9 +99,11 @@ namespace LibraryApp.WebApp.Controllers
                 {
                     Title = "Yeni kitap eklendi.."
                 };
+
                 return View("Ok", okViewModel);
             }
-            return View(book);
+            //ViewBag.Categories = new SelectList(blResultCategory.BlResultList, "Id", "Name");
+            return View(addBookViewModel);
         }
 
         public ActionResult DeleteBook(int? id)
@@ -113,6 +121,24 @@ namespace LibraryApp.WebApp.Controllers
             }
 
             return RedirectToAction("BookList","Home");
+        }
+
+
+        [NonAction]
+        public SelectList ToSelectList(DataTable table, string valueField, string textField)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = row[textField].ToString(),
+                    Value = row[valueField].ToString()
+                });
+            }
+
+            return new SelectList(list, "Value", "Text");
         }
     }
 }

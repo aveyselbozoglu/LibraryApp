@@ -58,6 +58,7 @@
     <Compile Include="EntityBase.cs" />
     <Compile Include="Messages\ErrorMessageCode.cs" />
     <Compile Include="Messages\ErrorMessageObj.cs" />
+    <Compile Include="ModelViews\AddBookViewModel.cs" />
     <Compile Include="ModelViews\AddressViewModel.cs" />
     <Compile Include="ModelViews\LoginViewModel.cs" />
     <Compile Include="ModelViews\RegisterViewModel.cs" />

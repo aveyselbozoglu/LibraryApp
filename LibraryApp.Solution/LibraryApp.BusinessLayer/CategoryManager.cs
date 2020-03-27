@@ -48,7 +48,7 @@ namespace LibraryApp.BusinessLayer
 
                 if (checkCategory != null)
                 {
-                    var booksRelatedCategory = repositoryBook.List(x => x.Category.Id == id);
+                    var booksRelatedCategory = repositoryBook.List(x => x.Category.Id== id);
 
                     if (booksRelatedCategory != null)
                     {

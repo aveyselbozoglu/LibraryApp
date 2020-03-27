@@ -3,6 +3,7 @@ using LibraryApp.Entities;
 using LibraryApp.Entities.Messages;
 using System;
 using System.Collections.Generic;
+using LibraryApp.Entities.ModelViews;
 
 namespace LibraryApp.BusinessLayer
 {
@@ -102,12 +103,12 @@ namespace LibraryApp.BusinessLayer
             return businessLayerResultBorrow;
         }
 
-        public BusinessLayerResult<Book> AddBook(Book book)
+        public BusinessLayerResult<Book> AddBook(AddBookViewModel addBookViewModel)
         {
-            if (book != null)
+            if (addBookViewModel != null)
             {
 
-                if (repositoryBook.Find(x => x.Isbn == book.Isbn) != null)
+                if (repositoryBook.Find(x => x.Isbn == addBookViewModel.Isbn) != null)
                 {
                     businessLayerResultBook.AddError(ErrorMessageCode.IsbnAlreadyExists, "Bu ISBN veritabanında bulunmaktadır");
                     return businessLayerResultBook;
@@ -115,15 +116,16 @@ namespace LibraryApp.BusinessLayer
 
                 Book newBook = new Book()
                 {
-                    Name = book.Name,
-                    Summary = book.Summary,
-                    Author = book.Author,
-                    PublishedDate = book.PublishedDate,
-                    Language = book.Language,
-                    PageCount = book.PageCount,
-                    Isbn = book.Isbn,
-                    Category = book.Category,
-                    IsAvailable = book.IsAvailable,
+                    Name = addBookViewModel.Name,
+                    Summary = addBookViewModel.Summary,
+                    Author = addBookViewModel.Author,
+                    PublishedDate = addBookViewModel.PublishedDate,
+                    Language = addBookViewModel.Language,
+                    PageCount = addBookViewModel.PageCount,
+                    Isbn = addBookViewModel.Isbn,
+                    CategoryId = addBookViewModel.CategoryId,
+
+                    IsAvailable = addBookViewModel.IsAvailable,
                     
                 };
 

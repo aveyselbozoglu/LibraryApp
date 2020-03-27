@@ -29,7 +29,7 @@ namespace LibraryApp.WebApp.Controllers
                     ErrorViewModel errorViewModel = new ErrorViewModel()
                     {
                         Title = "Adres eklenemedi",
-                        RedirectingUrl = "User/ShowProfile",
+                        RedirectingUrl = "~/User/ShowProfile",
                         Items = businessLayerResult.ErrorMessageObj
                     };
                     return View("Error", errorViewModel);
@@ -38,6 +38,7 @@ namespace LibraryApp.WebApp.Controllers
                 {
                     OkViewModel okViewModel = new OkViewModel()
                     {
+                        RedirectingUrl = "/User/ShowProfile",
                         Title = "Adres başarıyla eklendi"
                     };
                     return View("Ok", okViewModel);

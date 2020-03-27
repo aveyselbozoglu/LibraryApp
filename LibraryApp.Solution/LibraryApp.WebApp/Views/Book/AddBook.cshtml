@@ -1,5 +1,6 @@
 ﻿@using LibraryApp.Entities
-@model Book
+@using LibraryApp.Entities.ModelViews
+@model AddBookViewModel
 
 @{
     ViewBag.Title = "Kitap Ekle";
@@ -11,99 +12,97 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal col-md-8 col-md-offset-1">
-    <h4>BookViewModel</h4>
-    <hr />
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Summary, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.TextAreaFor(model => model.Summary,5,81, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.PublishedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-
-
-
-        <!--
-
-        todo buraya datetimepicker eklenecek
-
-
-        -->
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PublishedDate, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Isbn, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Isbn, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-    
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsAvailable, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(model => model.IsAvailable, new {@checked = "checked"})
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Language, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Language, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.PageCount, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PageCount, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    @{
-
-        if (ViewBag.Categories != null)
-        {
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Categories", null, htmlAttributes: new { @class = "form-control" })
-                </div>
+    <div class="form-horizontal col-md-8 col-md-offset-1">
+        <h4>BookViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             </div>
-        }
-    }
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-success" />
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Summary, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextAreaFor(model => model.Summary, 5, 81, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PublishedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <!--
+
+            todo buraya datetimepicker eklenecek
+
+            -->
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PublishedDate, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Isbn, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Isbn, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsAvailable, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsAvailable, new { @checked = "checked" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Language, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Language, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PageCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PageCount, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        @{
+
+            if (ViewBag.Categories != null)
+            {
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CategoryId, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+
+                        @Html.DropDownList("Categories", null, htmlAttributes: new { @class = "form-control" })
+
+                        @*@Html.DropDownListFor(model => model.Category,new SelectList((SelectList)ViewBag.Categories,"Name","Id"),new{ @class = "form-control" })*@
+                    </div>
+                </div>
+            }
+        }
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+
+
     </div>
-    <div>
-        @Html.ActionLink("Back to List", "BookList", "Home")
-    </div>
-</div>
 }
-
-

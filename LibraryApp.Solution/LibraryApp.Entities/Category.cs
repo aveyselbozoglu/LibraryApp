@@ -5,7 +5,9 @@ namespace LibraryApp.Entities
 {
     public class Category : EntityBase
     {
-        [Required, StringLength(50)]
+        
+        [Display(Name = "Adı"),
+         Required, StringLength(50)]
         public string Name { get; set; }
 
         public virtual List<Book> Books { get; set; }

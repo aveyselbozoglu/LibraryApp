@@ -38,14 +38,16 @@ namespace LibraryApp.WebApp.Controllers
                     };
                     return View("Error", errorViewModel);
                 }
-            }
-            OkViewModel okViewModel = new OkViewModel()
-            {
-                RedirectingUrl = "/Category/Index",
-                Title = "Kategori Eklendi"
-            };
+                OkViewModel okViewModel = new OkViewModel()
+                {
+                    RedirectingUrl = "/Category/Index",
+                    Title = "Kategori Eklendi"
+                };
 
-            return View("Ok", okViewModel);
+                return View("Ok", okViewModel);
+            }
+
+            return View(category);
         }
 
         // GET: Category/Delete/5
@@ -66,7 +68,7 @@ namespace LibraryApp.WebApp.Controllers
                 ErrorViewModel errorViewModel = new ErrorViewModel()
                 {
                     Items = blResultCategory.ErrorMessageObj,
-                    RedirectingUrl = "~/Home/CategoryList"
+                    RedirectingUrl = "/Home/CategoryList"
                 };
                 return View("Error", errorViewModel);
             }
@@ -74,7 +76,7 @@ namespace LibraryApp.WebApp.Controllers
             OkViewModel okViewModel = new OkViewModel()
             {
                 Title = "Kategoriyi başarıyla sildiniz..",
-                RedirectingUrl = "~/Home/CategoryList"
+                RedirectingUrl = "/Home/CategoryList"
             };
             return View("Ok", okViewModel);
         }

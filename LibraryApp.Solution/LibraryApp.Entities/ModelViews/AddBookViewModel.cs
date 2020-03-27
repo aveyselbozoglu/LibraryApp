@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace LibraryApp.Entities
+namespace LibraryApp.Entities.ModelViews
 {
-    public class Book : EntityBase
+    public class AddBookViewModel
     {
         [Display(Name = "Kitap Adı"),
          Required(ErrorMessage = "{0}  boş geçilemez"),
@@ -45,11 +46,7 @@ namespace LibraryApp.Entities
          StringLength(20, ErrorMessage = "{0} 70 karakterden fazla olamaz")]
         public string Language { get; set; }
 
-        [ForeignKey("Category")]
-        public int CategoryId { get; set; }
-
-        public virtual Category Category { get; set; }
-
-        public virtual List<Borrow> Borrows { get; set; }
+        [Required]
+        public int CategoryId;
     }
 }
