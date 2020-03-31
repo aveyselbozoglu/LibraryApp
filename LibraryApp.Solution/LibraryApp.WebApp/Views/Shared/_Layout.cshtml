@@ -1,4 +1,5 @@
 ﻿@using LibraryApp.Entities
+@using LibraryApp.WebApp.Models
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +29,7 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 
     <!-- DateTime Picker-->
-    
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!-- My Custom Css File -->
@@ -48,8 +49,6 @@
     <script src="~/Scripts/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <!-- DateTime Picker-->
-
-
 </head>
 <body>
     <div id="wrapper">
@@ -69,39 +68,38 @@
                 @{
                     /**/
 
-                    User currentUser = Session["login"] as User;
+                    User currentUser = CurrentSession.User as User;
                 }
-                
+
                 <li class="dropdown">
-                @if (currentUser != null && currentUser.IsAdmin)
-                {
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        Admin İşlemleri <i class="fa fa-user fa-fw"></i> <b class="caret"></b>
-                    </a>
+                    @if (currentUser != null && currentUser.IsAdmin)
+                    {
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Admin İşlemleri <i class="fa fa-user fa-fw"></i> <b class="caret"></b>
+                        </a>
 
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="~/Home/CategoryList"><i class="fa fa-user fa-fw"></i> Kategori Listele</a>
-                        </li>
-                        <li>
-                            <a href="~/Category/AddCategory"><i class="fa fa-gear fa-fw"></i> Kategori Ekle</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="~/Home/CategoryList"><i class="fa fa-user fa-fw"></i> Kategori Listele</a>
+                            </li>
+                            <li>
+                                <a href="~/Category/AddCategory"><i class="fa fa-gear fa-fw"></i> Kategori Ekle</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
 
-                            <a href="~/Home/BookList"><i class="fa fa-sign-out fa-fw"></i> Kitap Listele</a>
-                        </li>
+                                <a href="~/Home/BookList"><i class="fa fa-sign-out fa-fw"></i> Kitap Listele</a>
+                            </li>
 
-                        <li><a href="~/Book/AddBook"><i class="fa fa-home fa-fw"></i> Kitap Ekle</a></li>
-
-                    </ul>
-                }
+                            <li><a href="~/Book/AddBook"><i class="fa fa-home fa-fw"></i> Kitap Ekle</a></li>
+                        </ul>
+                    }
                 </li>
             </ul>
             <!-- Top Navigation: Right Menu -->
             <ul class="nav navbar-right navbar-top-links">
 
-                @if (Session["login"] == null)
+                @if (CurrentSession.User == null)
                 {
                     <li><a href="~/Home/LoginUser"><i class="fa fa-low-vision fa-fw text-success"></i> Login</a></li>
                     <li><a href="~/Home/RegisterUser"><i class="fa fa-question fa-fw"></i> Register</a></li>
@@ -109,7 +107,7 @@
                 }
                 else
                 {
-                    currentUser = @Session["login"] as User;
+                    currentUser = @CurrentSession.User as User;
 
                     <li class="dropdown">
 
@@ -176,9 +174,5 @@
             </div>
         </div>
     </div>
-
-
 </body>
-
-
 </html>

@@ -48,22 +48,23 @@ namespace LibraryApp.BusinessLayer
 
                 if (checkCategory != null)
                 {
-                    var booksRelatedCategory = repositoryBook.List(x => x.Category.Id== id);
+                    var booksRelatedCategory = repositoryBook.List(x => x.Category.Id == id);
 
-                    if (booksRelatedCategory != null)
+                    if (booksRelatedCategory.Count > 0)
                     {
-                        var borrowsRelatedCategory = repositoryBorrow.List(x => x.Book.Id == id);
+                        foreach (var bookRelatedCategory in booksRelatedCategory)
+                        {
+                            var borrows = repositoryBorrow.List(x => x.Book.Id == bookRelatedCategory.Id);
 
-                        if (borrowsRelatedCategory != null)
-                        {
-                            foreach (Borrow borrow in borrowsRelatedCategory)
+                            if (borrows.Count > 0)
                             {
-                                repositoryBorrow.Delete(borrow);
+                                foreach (var borrow in borrows)
+                                {
+                                    repositoryBorrow.Delete(borrow);
+                                }
                             }
-                        }
-                        foreach (Book book in booksRelatedCategory)
-                        {
-                            repositoryBook.Delete(book);
+
+                            repositoryBook.Delete(bookRelatedCategory);
                         }
                     }
 

@@ -1,9 +1,9 @@
 ﻿using LibraryApp.DataAccessLayer.EntityFramework;
 using LibraryApp.Entities;
 using LibraryApp.Entities.Messages;
+using LibraryApp.Entities.ModelViews;
 using System;
 using System.Collections.Generic;
-using LibraryApp.Entities.ModelViews;
 
 namespace LibraryApp.BusinessLayer
 {
@@ -31,12 +31,18 @@ namespace LibraryApp.BusinessLayer
             if (id == null)
             {
                 businessLayerResultBorrow.AddError(ErrorMessageCode.BookNotFound, "Kitap bulunamadı");
+                return businessLayerResultBorrow;
             }
 
             var checkBook = repositoryBook.Find(b => b.Id == id);
 
             if (checkBook != null)
             {
+                if (!checkBook.IsAvailable)
+                {
+                    businessLayerResultBorrow.AddError(ErrorMessageCode.BookCantGetRented, "Ödünç alınmış bir kitapı ödünç alamazsınız..");
+                    return businessLayerResultBorrow;
+                }
                 Borrow newBorrow = new Borrow()
                 {
                     Book = checkBook,
@@ -67,14 +73,8 @@ namespace LibraryApp.BusinessLayer
             if (id != null)
             {
                 var checkBook = repositoryBook.Find(b => b.Id == id);
-                if (checkBook.IsAvailable)
-                {
-                    checkBook.IsAvailable = false;
-                }
-                else
-                {
-                    checkBook.IsAvailable = true;
-                }
+
+                checkBook.IsAvailable = !checkBook.IsAvailable;
 
                 repositoryBook.Update(checkBook);
             }
@@ -107,6 +107,7 @@ namespace LibraryApp.BusinessLayer
         {
             if (addBookViewModel != null)
             {
+                var lstCategories = new CategoryManager().GetCategories();
 
                 if (repositoryBook.Find(x => x.Isbn == addBookViewModel.Isbn) != null)
                 {
@@ -124,9 +125,7 @@ namespace LibraryApp.BusinessLayer
                     PageCount = addBookViewModel.PageCount,
                     Isbn = addBookViewModel.Isbn,
                     CategoryId = addBookViewModel.CategoryId,
-
                     IsAvailable = addBookViewModel.IsAvailable,
-                    
                 };
 
                 var checkIsBookInserted = repositoryBook.Insert(newBook);
@@ -146,30 +145,35 @@ namespace LibraryApp.BusinessLayer
 
         public BusinessLayerResult<Book> RemoveBookById(int? id)
         {
-
             businessLayerResultBook.BlResult = repositoryBook.Find(x => x.Id == id);
 
             if (businessLayerResultBook.BlResult != null)
             {
-
                 if (!businessLayerResultBook.BlResult.IsAvailable)
                 {
-                    businessLayerResultBook.AddError(ErrorMessageCode.BookCouldNotDeleted,"Kiralanmış kitabı silemezsiniz..");
+                    businessLayerResultBook.AddError(ErrorMessageCode.BookCouldNotDeleted, "Kiralanmış kitabı silemezsiniz..");
                 }
                 else
                 {
+                    var borrowsRelatedBooks = repositoryBorrow.List(x => x.Book.Id == id);
+
+                    if (borrowsRelatedBooks.Count > 0)
+                    {
+                        foreach (var borrowsRelatedBook in borrowsRelatedBooks)
+                        {
+                            repositoryBorrow.Delete(borrowsRelatedBook);
+                        }
+                    }
+
                     repositoryBook.Delete(businessLayerResultBook.BlResult);
                 }
-                
             }
             else
             {
-                businessLayerResultBook.AddError(ErrorMessageCode.BookNotFound , "Silinecek kitap bulunamadı");
+                businessLayerResultBook.AddError(ErrorMessageCode.BookNotFound, "Silinecek kitap bulunamadı");
             }
 
             return businessLayerResultBook;
         }
-
-      
     }
 }

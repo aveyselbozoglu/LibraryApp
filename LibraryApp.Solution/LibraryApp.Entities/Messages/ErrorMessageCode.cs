@@ -12,6 +12,7 @@
         BookNotFound = 1001,
         BookCouldNotAdded = 1002,
         BookCouldNotDeleted = 1003,
+        BookCantGetRented=1005,
         AddressCouldNotInserted = 1500,
         AddressCouldNotDeleted = 1501,
         NoAddressForUser = 1600,
@@ -19,6 +20,7 @@
         CategoryNotFound = 1701,
 
         IsbnAlreadyExists = 1003,
+
         
     }
 }

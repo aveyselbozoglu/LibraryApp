@@ -3,9 +3,12 @@ using LibraryApp.Entities;
 using LibraryApp.Entities.ModelViews;
 using LibraryApp.WebApp.NotifyModels;
 using System.Web.Mvc;
+using LibraryApp.WebApp.Filters;
+using LibraryApp.WebApp.Models;
 
 namespace LibraryApp.WebApp.Controllers
 {
+    [Auth]
     public class AddressController : Controller
     {
         // GET: Address
@@ -21,9 +24,9 @@ namespace LibraryApp.WebApp.Controllers
             {
                 AddressManager addressManager = new AddressManager();
                 BusinessLayerResult<Address> businessLayerResult = new BusinessLayerResult<Address>();
-                User currentUser = Session["login"] as User;
+                //User currentUser = CurrentSession.User as User;
 
-                businessLayerResult = addressManager.AddAddressForUser(addressViewModel, currentUser);
+                businessLayerResult = addressManager.AddAddressForUser(addressViewModel, CurrentSession.User);
                 if (businessLayerResult.ErrorMessageObj.Count > 0)
                 {
                     ErrorViewModel errorViewModel = new ErrorViewModel()

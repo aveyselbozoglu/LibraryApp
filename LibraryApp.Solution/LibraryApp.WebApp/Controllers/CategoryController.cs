@@ -2,16 +2,16 @@
 using LibraryApp.Entities;
 using LibraryApp.WebApp.NotifyModels;
 using System.Web.Mvc;
+using LibraryApp.WebApp.Filters;
+using LibraryApp.WebApp.Models;
 
 namespace LibraryApp.WebApp.Controllers
 {
+    [Auth]
+    [AuthAdmin]
     public class CategoryController : Controller
     {
-        // GET: Category
-        public ActionResult Index()
-        {
-            return RedirectToAction("CategoryList", "Home");
-        }
+        
 
         // GET: Category/Create
         public ActionResult AddCategory()
@@ -28,6 +28,7 @@ namespace LibraryApp.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //CacheHelper.RemoveCategoriesFromCache();
                 CategoryManager categoryManager = new CategoryManager();
                 var blResultCategory = categoryManager.AddCategory(category);
                 if (blResultCategory.ErrorMessageObj.Count > 0)
@@ -40,7 +41,7 @@ namespace LibraryApp.WebApp.Controllers
                 }
                 OkViewModel okViewModel = new OkViewModel()
                 {
-                    RedirectingUrl = "/Category/Index",
+                    RedirectingUrl = "/Home/CategoryList",
                     Title = "Kategori Eklendi"
                 };
 
@@ -78,6 +79,7 @@ namespace LibraryApp.WebApp.Controllers
                 Title = "Kategoriyi başarıyla sildiniz..",
                 RedirectingUrl = "/Home/CategoryList"
             };
+            //CacheHelper.RemoveCategoriesFromCache();
             return View("Ok", okViewModel);
         }
     }

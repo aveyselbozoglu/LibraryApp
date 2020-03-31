@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryApp.Entities.ModelViews
 {
@@ -46,7 +42,7 @@ namespace LibraryApp.Entities.ModelViews
          StringLength(20, ErrorMessage = "{0} 70 karakterden fazla olamaz")]
         public string Language { get; set; }
 
-        [Required]
-        public int CategoryId;
+        [Required(ErrorMessage = "Kategori seçimi yapınız..")]
+        public int CategoryId { get; set; }
     }
 }

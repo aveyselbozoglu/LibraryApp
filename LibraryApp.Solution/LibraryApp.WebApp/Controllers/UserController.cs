@@ -3,20 +3,24 @@ using LibraryApp.Entities;
 using LibraryApp.WebApp.NotifyModels;
 using System.Web;
 using System.Web.Mvc;
+using LibraryApp.WebApp.Filters;
+using LibraryApp.WebApp.Models;
 
 namespace LibraryApp.WebApp.Controllers
 {
+    [Auth]
     public class UserController : Controller
     {
         // GET: User
         public ActionResult ShowProfile()
         {
-            User currentUser = Session["login"] as User;
+            //User currentUser = Session["login"] as User;
+            //User currentUser = CurrentSession.User;
 
             UserManager userManager = new UserManager();
             BusinessLayerResult<User> businessLayerResultUser = new BusinessLayerResult<User>();
 
-            businessLayerResultUser = userManager.GetUserById(currentUser.Id);
+            businessLayerResultUser = userManager.GetUserById(CurrentSession.User.Id);
 
             if (businessLayerResultUser.ErrorMessageObj.Count > 0)
             {
@@ -29,7 +33,7 @@ namespace LibraryApp.WebApp.Controllers
             }
 
             AddressManager addressManager = new AddressManager();
-            var businessLayerResultAddress = addressManager.GetAllAddressesByUserId(currentUser.Id);
+            var businessLayerResultAddress = addressManager.GetAllAddressesByUserId(CurrentSession.User.Id);
 
             TempData["addresses"] = businessLayerResultAddress.BlResultList;
 
@@ -38,9 +42,11 @@ namespace LibraryApp.WebApp.Controllers
 
         public ActionResult EditProfile()
         {
-            User user = Session["login"] as User;
+            //User user = Session["login"] as User;
 
-            return View(user);
+            //return View(user);
+
+            return View(CurrentSession.User);
         }
 
         [HttpPost]
@@ -74,7 +80,7 @@ namespace LibraryApp.WebApp.Controllers
                     return View("Error", errorViewModel);
                 }
 
-                Session["login"] = businessLayerResultUser.BlResult;
+                CurrentSession.Set("login",businessLayerResultUser.BlResult);
                 OkViewModel okViewModel = new OkViewModel()
                 {
                     Title = "Kullanıcı güncellendi",

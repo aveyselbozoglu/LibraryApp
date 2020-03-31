@@ -2,12 +2,11 @@
 <!-- /.row -->
 
 @{
-    
+
     var countCategories = new CategoryManager().GetCategories().Count;
 
     var countBooks = new BookManager().GetBookList().Count;
     var countBooksAvailable = new BookManager().GetBookListAvailable().Count;
-
 
 }
 
@@ -86,5 +85,4 @@
             </a>
         </div>
     </div>
-   
 </div>

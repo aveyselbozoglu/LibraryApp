@@ -4,6 +4,8 @@ using LibraryApp.Entities.Messages;
 using LibraryApp.Entities.ModelViews;
 using LibraryApp.WebApp.NotifyModels;
 using System.Web.Mvc;
+using LibraryApp.WebApp.Filters;
+using LibraryApp.WebApp.Models;
 
 namespace LibraryApp.WebApp.Controllers
 {
@@ -21,11 +23,14 @@ namespace LibraryApp.WebApp.Controllers
             return View();
         }
 
+        
         public ActionResult CategoryList()
         {
             var categoryManager = new CategoryManager();
 
             return View(categoryManager.GetCategories());
+
+            //return View(CacheHelper.GetCategoriesFromCache());
         }
 
         public ActionResult BookList()
@@ -117,7 +122,7 @@ namespace LibraryApp.WebApp.Controllers
                         return View(loginViewModel);
                     }
 
-                    Session["login"] = res.BlResult;
+                    CurrentSession.Set("login", res.BlResult);
 
                     OkViewModel okViewModel = new OkViewModel()
                     {
@@ -133,10 +138,15 @@ namespace LibraryApp.WebApp.Controllers
 
         public ActionResult LogOut()
         {
-            if (Session["login"] != null)
+            if (CurrentSession.User != null)
                 Session.RemoveAll();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
